@@ -1,0 +1,67 @@
+.chameleon{
+	width: 1024px;
+	height: 300px;
+}
+
+.video-wrap{
+	float: left;
+	width: 50%;
+}
+
+.slide-wrap{
+	width: 50%;
+	float: left;
+}
+
+.preview-wrap{
+	width: 100%;
+	float: left;
+	position: relative;
+    overflow: hidden;
+}
+
+
+.carousel-wrap{
+	background: #e6e6e6;
+    padding-left: 75px;
+    padding-top: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-control{
+	position: absolute;
+    color: white;
+    opacity: .9;
+    font-size: 35px;
+    font-weight: 100;
+    line-height: 30px;
+    background: #000;
+    padding: 5px;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    display: block;
+    top: 35%;
+}
+
+.carousel-control.right{
+	left:auto;
+	right: 0;
+}
+
+.preview-wrap .carousel-item{
+	float: left;
+}
+
+.preview-wrap .preview-image img{
+padding-left: 10px;
+    padding-right: 10px;
+    width: 100px;
+    cursor: pointer;
+}
+
+.preview-wrap .slide-number{
+	padding: 10px 0px 10px 10px;
+	text-align: center;
+}
