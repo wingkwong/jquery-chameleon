@@ -1,2 +1,2 @@
-# pptVideoSync
+# chameleon
 PowerPoint slides with Video 
