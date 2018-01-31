@@ -51,14 +51,20 @@
 			},
 			_clickPreviewImgHandler = function(){
 				console.log("_clickPreviewImgHandler");
+
 			},
 			_updateImgOrder = function(index){
-				console.log("_updateIndicator");
+				console.log("_updateImgOrder");
 
 				 var index = parseInt(index) + 1;
 		         var target = $('.cloneditem-2 .preview-image[data-index="' + index + '"]').parent().parent();
 		         $('.carousel-item.active').removeClass("active");
 		         target.addClass("active");
+			},
+			_parseTime = function(time){
+				// parse time of type string: '00:00:15'
+		         var hms = time.split(':');
+		         return (parseInt(hms[0] * 60 * 60) + parseInt(hms[1] * 60) + parseInt(hms[2]));
 			},
 
 			methods = {
