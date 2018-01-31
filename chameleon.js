@@ -79,7 +79,9 @@
 			//expose public methods
 			if (typeof options === 'string' && $.isFunction(methods[options])) {
 	            return methods[ options ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-	        } else {
+	        }else if(typeof options === 'object' || ! options){
+	        	// do nothing
+	        }else {
 	            $.error( 'Method ' +  options + ' does not exist on chameleon.js' );
 	        }    
 
