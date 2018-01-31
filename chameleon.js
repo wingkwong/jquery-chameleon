@@ -23,16 +23,36 @@
 			$carouselWrap = '<div class="carousel-wrap"></div>',
 			$carouselItem = '<div class="carousel-item"></div>',
 			$previewImage = '<div class="iWrap"><div class="preview-image"><img/></div><div class="slide-number"></div></div>',
-			$carouselControl = '<a class="left sync carousel-control">&lt;</a><a class="right sync carousel-control">&gt;</a>'
+			$carouselControl = '<a class="prev sync carousel-control">&lt;</a><a class="next sync carousel-control">&gt;</a>'
 
-			_clickIndicatorHandler = function(){
+			_clickIndicatorHandler = function(e){
 				console.log("_clickIndicatorHandler");
+				e.preventDefault();
+				if($(this).hasClass("prev")){
+					if($this.find('.carousel-item.active').is(':first-child')){
+						 $this.find('.carousel-item.active').removeClass("active").parent()
+							 .find('.carousel-item:last-child').addClass("active");	
+					}else{
+						 $this.find('.carousel-item.active').removeClass("active")
+							 .prev().addClass("active");	
+					}
+				}else if ($(this).hasClass("next")){
+					if($this.find('.carousel-item.active').is(':last-child')){
+						 $this.find('.carousel-item.active').removeClass("active").parent()
+							 .find('.carousel-item:first-child').addClass("active");	
+					}else{
+						 $this.find('.carousel-item.active').removeClass("active")
+							 .next().addClass("active");	
+					}
+				} else{
+					return;
+				}
 
 			},
 			_clickPreviewImgHandler = function(){
 				console.log("_clickPreviewImgHandler");
 			},
-			_updateIndicator = function(index){
+			_updateImgOrder = function(index){
 				console.log("_updateIndicator");
 
 				 var index = parseInt(index) + 1;
@@ -108,7 +128,7 @@
                          .appendTo($(this));
                  	}
             	 });
-				_updateIndicator(0);
+				_updateImgOrder(0);
         	}else{
         		$this.find('.carousel-item').addClass("active");
         	}
