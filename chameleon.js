@@ -22,20 +22,17 @@
 			$previewWrap = '<div class="preview-wrap"></div>',
 			$carouselWrap = '<div class="carousel-wrap"></div>',
 			$carouselItem = '<div class="carousel-item"></div>',
-			$previewImage = '<div class="preview-image"><img/></div><div class="slide-number"></div>',
+			$previewImage = '<div class="iWrap"><div class="preview-image"><img/></div><div class="slide-number"></div></div>',
 			$carouselControl = '<a class="left sync carousel-control">&lt;</a><a class="right sync carousel-control">&gt;</a>'
 
-			//-- private methods
-			_clickHandler = function(){
+			_clickIndicatorHandler = function(){
+				console.log("_clickIndicatorHandler");
 
 			},
-			_init = function(){
-				
+			_clickPreviewImgHandler = function(){
+				console.log("_clickPreviewImgHandler");
 			},
-			_init = function(){
-				
-			},
-			//-- public methods
+			
 			methods = {
 				 method1: function() {
 
@@ -80,7 +77,7 @@
 			// Preview Carousel
 			$this.find('.preview-wrap').append($carouselWrap).append($carouselControl);
 
-			for(var i=0; i<o.slidePool.slides.length; i++){
+			for(var i=0; i<slides.length; i++){
 				var $cItem = $($carouselItem).append($previewImage);
 				$cItem.find('.preview-image').attr('data-index', i);
 				$cItem.find('.preview-image img').attr('src', slides[i].img);
@@ -88,18 +85,36 @@
 				$this.find('.carousel-wrap').append($cItem);
 			}
 
+			$this.find('.carousel-item:first').addClass("active");
+
+			if (slides.length > o.carouselSlide) {
+				$('.carousel-item').each(function() {
+                 var itemToClone = $(this);
+                 for (var i = 1; i < o.carouselSlide; i++) {
+                     itemToClone = itemToClone.next();
+                     if (!itemToClone.length) {
+                         itemToClone = $(this).siblings(':first');
+                     }
+                     itemToClone.children(':first-child').clone()
+                         .addClass("cloneditem-" + (i))
+                         .appendTo($(this));
+                 }
+             });
+        	}
+
+			$this.find('.carousel-control').click(_clickIndicatorHandler);
+			$this.find('.preview-image').click(_clickPreviewImgHandler);
+
 			//-----------------CHAMLEON--------------------
 		});
 	  };
 	  
 	  // plugin defaults
 	  $.fn.chameleon.defaults = {
-	  	// slides JSON object
-		slidePool: {},
-		// download video button
-		downloadVideo: false,
-		// download transcript button
-		downloadTranscript: false
+		slidePool: {}, 					// slides JSON object
+		carouselSlide: 6,				// number of slides showing in carousel
+		downloadVideo: false,			// download video button
+		downloadTranscript: false		// download transcript button
 
 	  };
 }));

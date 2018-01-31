@@ -13,6 +13,13 @@
 	float: left;
 }
 
+.slide-wrap img{    
+	display: block;
+    max-width: 100%;
+    height: auto;
+	width: 100%;
+}
+
 .preview-wrap{
 	width: 100%;
 	float: left;
@@ -51,7 +58,11 @@
 }
 
 .preview-wrap .carousel-item{
-	float: left;
+	display: none;
+}
+
+.preview-wrap .carousel-item.active{
+	display: block;
 }
 
 .preview-wrap .preview-image img{
@@ -64,4 +75,8 @@ padding-left: 10px;
 .preview-wrap .slide-number{
 	padding: 10px 0px 10px 10px;
 	text-align: center;
+}
+
+.preview-wrap .iWrap{
+	float: left;
 }
