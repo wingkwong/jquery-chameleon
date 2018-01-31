@@ -68,13 +68,20 @@
 			},
 
 			methods = {
-				 method1: function() {
-
+				 method1: function(){
+				 	
 				 },
 				 method2: function(){
 				 	
 				 }
 			};
+
+			//expose public methods
+			if (typeof options === 'string' && $.isFunction(methods[options])) {
+	            return methods[ options ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+	        } else {
+	            $.error( 'Method ' +  options + ' does not exist on chameleon.js' );
+	        }    
 
 			//-----------------CHAMLEON--------------------
 
@@ -141,6 +148,8 @@
 
 			$this.find('.carousel-control').click(_clickIndicatorHandler);
 			$this.find('.preview-image').click(_clickPreviewImgHandler);
+
+			
 
 			//-----------------CHAMLEON--------------------
 		});
