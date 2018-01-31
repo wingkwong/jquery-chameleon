@@ -1,0 +1,32 @@
+{  
+   "slides":[  
+      {  
+         "time":"00:00:00",
+         "img":"https://dummyimage.com/600x400/000/fff&text=1"
+      },
+      {  
+         "time":"00:00:05",
+         "img":"https://dummyimage.com/600x400/000/fff&text=2"
+      },
+      {  
+         "time":"00:00:10",
+         "img":"https://dummyimage.com/600x400/000/fff&text=3"
+      },
+      {  
+         "time":"00:00:15",
+         "img":"https://dummyimage.com/600x400/000/fff&text=4"
+      },
+      {  
+         "time":"00:00:20",
+         "img":"https://dummyimage.com/600x400/000/fff&text=5"
+      },
+      {  
+         "time":"00:00:25",
+         "img":"https://dummyimage.com/600x400/000/fff&text=6"
+      },
+      {  
+         "time":"00:00:30",
+         "img":"https://dummyimage.com/600x400/000/fff&text=7"
+      }
+   ]
+}
