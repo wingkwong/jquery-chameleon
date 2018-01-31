@@ -32,7 +32,15 @@
 			_clickPreviewImgHandler = function(){
 				console.log("_clickPreviewImgHandler");
 			},
-			
+			_updateIndicator = function(index){
+				console.log("_updateIndicator");
+
+				 var index = parseInt(index) + 1;
+		         var target = $('.cloneditem-2 .preview-image[data-index="' + index + '"]').parent().parent();
+		         $('.carousel-item.active').removeClass("active");
+		         target.addClass("active");
+			},
+
 			methods = {
 				 method1: function() {
 
@@ -77,11 +85,11 @@
 			// Preview Carousel
 			$this.find('.preview-wrap').append($carouselWrap).append($carouselControl);
 
-			for(var i=0; i<slides.length; i++){
+			for(var i=1; i<=slides.length; i++){
 				var $cItem = $($carouselItem).append($previewImage);
 				$cItem.find('.preview-image').attr('data-index', i);
-				$cItem.find('.preview-image img').attr('src', slides[i].img);
-				$cItem.find('.slide-number').html((i+1) + '/' + slides.length);
+				$cItem.find('.preview-image img').attr('src', slides[i-1].img);
+				$cItem.find('.slide-number').html((i) + '/' + slides.length);
 				$this.find('.carousel-wrap').append($cItem);
 			}
 
@@ -98,8 +106,11 @@
                      itemToClone.children(':first-child').clone()
                          .addClass("cloneditem-" + (i))
                          .appendTo($(this));
-                 }
-             });
+                 	}
+            	 });
+				_updateIndicator(0);
+        	}else{
+        		$this.find('.carousel-item').addClass("active");
         	}
 
 			$this.find('.carousel-control').click(_clickIndicatorHandler);
@@ -112,7 +123,7 @@
 	  // plugin defaults
 	  $.fn.chameleon.defaults = {
 		slidePool: {}, 					// slides JSON object
-		carouselSlide: 6,				// number of slides showing in carousel
+		carouselSlide: 5,				// number of slides showing in carousel
 		downloadVideo: false,			// download video button
 		downloadTranscript: false		// download transcript button
 
