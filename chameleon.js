@@ -30,7 +30,117 @@
             $carouselItem = '<div class="carousel-item"></div>',
             $previewImage = '<div class="iWrap"><div class="preview-image"><img/></div><div class="slide-number"></div></div>',
             $carouselControl = '<a class="prev sync carousel-control">&lt;</a><a class="next sync carousel-control">&gt;</a>',
-            jwplayerInstance = {};
+            slides = {},
+            jwPlayerInst = {};
+
+        function _init() {
+            $chameleon.append($videoWrap).append($slideWrap).append($previewWrap);
+
+            if (typeof o.slidePool === "object") {
+                if (typeof o.slidePool.slides != "undefined" && o.slidePool.slides.length > 0) {
+                    $this.slides = o.slidePool.slides;
+                    _buildHabitat();
+                } else {
+                    return;
+                }
+            }
+
+            if (typeof o.slidePool === "string") {
+                var regex = /(?:\.([^.]+))?$/;
+
+                if (regex.exec(o.slidePool)[1] == "json") {
+                    $.getJSON(o.slidePool, function(data) {
+                        $this.slides = data.slides;
+                    }).done(function() {
+                        _buildHabitat();
+                    });
+                } else {
+                    return;
+                }
+            }
+        }
+
+        function _buildHabitat() {
+            // Slide Wrap
+            $chameleon.find('.slide-wrap img').attr('src', $this.slides[0].img);
+
+            // Carousel for previewing slides
+            $chameleon.find('.preview-wrap').append($carouselWrap).append($carouselControl);
+
+            for (var i = 1; i <= $this.slides.length; i++) {
+                var $cItem = $($carouselItem).append($previewImage);
+                $cItem.find('.preview-image').attr('data-index', i);
+                $cItem.find('.preview-image img').attr('src', $this.slides[i - 1].img);
+                $cItem.find('.slide-number').html((i) + '/' + $this.slides.length);
+                $chameleon.find('.carousel-wrap').append($cItem);
+            }
+
+            $chameleon.find('.carousel-item:first').addClass("active");
+
+            if ($this.slides.length > o.carouselSlide) {
+                $('.carousel-item').each(function() {
+                    var itemToClone = $(this);
+                    for (var i = 1; i < o.carouselSlide; i++) {
+                        itemToClone = itemToClone.next();
+                        if (!itemToClone.length) {
+                            itemToClone = $(this).siblings(':first');
+                        }
+                        itemToClone.children(':first-child').clone()
+                            .addClass("cloneditem-" + (i))
+                            .appendTo($(this));
+                    }
+                });
+
+                _updateSlideOrder(0);
+
+            } else {
+                $chameleon.find('.carousel-item').addClass("active");
+            }
+
+            _feedChameleon();
+        }
+
+        function _feedChameleon() {
+            $this.jwPlayerInst.onReady(function() {
+                //TODO:
+            });
+
+            $this.jwPlayerInst.onTime(function() {
+                var time = $this.jwPlayerInst.getPosition();
+                var duration = $this.jwPlayerInst.getDuration();
+                _showSlideHandler(time, duration);
+            });
+
+            $this.jwPlayerInst.onComplete(function() {
+                $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[0].img + '"/>');
+            });
+
+            // Move to the target timeslot when the slide preview is clicked
+            $chameleon.find('.preview-image').click(function() {
+                var id = $(this).attr("data-index");
+                $this.jwPlayerInst.seek(_parseStrTime($this.slides[id - 1].time));
+            });
+
+            $chameleon.find('.carousel-control.prev').click(function() {
+                var id = $('.active .cloneditem-2 .preview-image').attr("data-index");
+                id = parseInt(id) - 1;
+                if (id == 0) {
+                    id = $this.slides.length;
+                }
+
+                $this.jwPlayerInst.seek(_parseStrTime($this.slides[id - 1].time));
+            });
+
+            $chameleon.find('.carousel-control.next').click(function() {
+                var id = $('.active .cloneditem-2 .preview-image').attr("data-index");
+                if (id == $this.slides.length) {
+                    id = 0;
+                }
+
+                $this.jwPlayerInst.seek(_parseStrTime($this.slides[id].time));
+            });
+
+        }
 
         function _updateSlideOrder(index) {
             var index = parseInt(index) + 1;
@@ -45,65 +155,26 @@
             return (parseInt(hms[0] * 60 * 60) + parseInt(hms[1] * 60) + parseInt(hms[2]));
         }
 
-        function _showSlideHandler(time, duration){
-	        if (slides.length > 5) {
-	             if (time >= _parseStrTime(slides[slides.length - 1].time)) {
-	                 _updateSlideOrder(slides.length - 1);
-	                 $chameleon.find('.slide-wrap').html('<img src="' + slides[slides.length - 1].img + '" data-index="' + slides.length + '"/>');
-	             } else {
-	                 for (var i = 0, j = 1; i < slides.length; i++, j++) {
-	                     if (time >= _parseStrTime(slides[i].time) && time < _parseStrTime(slides[j].time)) {
-	                         _updateSlideOrder(i);
-	                         $chameleon.find('.slide-wrap').html('<img src="' + slides[i].img + '" data-index="' + i + '"/>');
-	                         return;
-	                     }
-	                 }
-	             }
-	         }
+        function _showSlideHandler(time, duration) {
+            if ($this.slides.length > 5) {
+                if (time >= _parseStrTime($this.slides[$this.slides.length - 1].time)) {
+                    _updateSlideOrder($this.slides.length - 1);
+                    $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[$this.slides.length - 1].img + '" data-index="' + $this.slides.length + '"/>');
+                } else {
+                    for (var i = 0, j = 1; i < $this.slides.length; i++, j++) {
+                        if (time >= _parseStrTime($this.slides[i].time) && time < _parseStrTime($this.slides[j].time)) {
+                            _updateSlideOrder(i);
+                            $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[i].img + '" data-index="' + i + '"/>');
+                            return;
+                        }
+                    }
+                }
+            }
         }
 
         // public ------------------------
-
-        function feeding(jwPlayerInst) {
-            jwPlayerInst.onReady(function() {
-                //TODO:
-            });
-
-            jwPlayerInst.onTime(function() {
-               var time = jwPlayerInst.getPosition();
-	           var duration = jwPlayerInst.getDuration();
-	           _showSlideHandler(time, duration);
-            });
-
-            jwPlayerInst.onComplete(function() {
-                $chameleon.find('.slide-wrap').html('<img src="' + slides[0].img + '"/>');
-            });
-
-            // Move to the target timeslot when the slide preview is clicked
-            $chameleon.find('.preview-image').click(function() {
-                var id = $(this).attr("data-index");
-                jwPlayerInst.seek(_parseStrTime(slides[id - 1].time));
-            });
-
-            $chameleon.find('.carousel-control.prev').click(function() {
-            	var id = $('.active .cloneditem-2 .preview-image').attr("data-index");
-            	id = parseInt(id) - 1;
-            	if (id == 0) {
-                        id = slides.length;
-                    }
-
-                jwPlayerInst.seek(_parseStrTime(slides[id - 1].time));
-            });
-
-            $chameleon.find('.carousel-control.next').click(function() {
-            	var id = $('.active .cloneditem-2 .preview-image').attr("data-index");
-            	if (id == slides.length) {
-                        id = 0;
-                    }
-
-                jwPlayerInst.seek(_parseStrTime(slides[id].time));
-            });
-
+        function setJWPlayerInst(jwPlayerInst) {
+            $this.jwPlayerInst = jwPlayerInst;
         }
 
         function hook(hookName) {
@@ -112,80 +183,12 @@
             }
         }
 
-
-
         //-----------------CHAMLEON--------------------//
 
-        $chameleon.append($videoWrap);
-
-        var slides;
-
-        if (typeof o.slidePool === "object") {
-            if (typeof o.slidePool.slides != "undefined" && o.slidePool.slides.length > 0) {
-                slides = o.slidePool.slides
-            } else {
-                return;
-            }
-        }
-
-        if (typeof o.slidePool === "string") {
-            var regex = /(?:\.([^.]+))?$/;
-            if (regex.exec(o.slidePool)[1] == "json") {
-                $.getJSON(o.slidePool, function(data) {
-                    console.log(data);
-                    //TODO: test this
-                    slides = data;
-                });
-            } else {
-                return;
-            }
-        }
-
-
-        $chameleon.append($slideWrap).append($previewWrap);
-
-        // Slide Wrap
-        $chameleon.find('.slide-wrap img').attr('src', slides[0].img);
-
-        // Preview Carousel
-        $chameleon.find('.preview-wrap').append($carouselWrap).append($carouselControl);
-
-        for (var i = 1; i <= slides.length; i++) {
-            var $cItem = $($carouselItem).append($previewImage);
-            $cItem.find('.preview-image').attr('data-index', i);
-            $cItem.find('.preview-image img').attr('src', slides[i - 1].img);
-            $cItem.find('.slide-number').html((i) + '/' + slides.length);
-            $chameleon.find('.carousel-wrap').append($cItem);
-        }
-
-        $chameleon.find('.carousel-item:first').addClass("active");
-
-        if (slides.length > o.carouselSlide) {
-            $('.carousel-item').each(function() {
-                var itemToClone = $(this);
-                for (var i = 1; i < o.carouselSlide; i++) {
-                    itemToClone = itemToClone.next();
-                    if (!itemToClone.length) {
-                        itemToClone = $(this).siblings(':first');
-                    }
-                    itemToClone.children(':first-child').clone()
-                        .addClass("cloneditem-" + (i))
-                        .appendTo($(this));
-                }
-            });
-            _updateSlideOrder(0);
-        } else {
-            $chameleon.find('.carousel-item').addClass("active");
-        }
-
-
-
-
-
-
+        _init();
 
         return {
-            feeding: feeding
+            setJWPlayerInst: setJWPlayerInst
         };
 
         //-----------------CHAMLEON--------------------//
