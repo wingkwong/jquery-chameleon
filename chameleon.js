@@ -32,36 +32,6 @@
             $carouselControl = '<a class="prev sync carousel-control">&lt;</a><a class="next sync carousel-control">&gt;</a>',
             jwplayerInstance = {};
 
-
-        function _clickIndicatorHandler(e) {
-            console.log("_clickIndicatorHandler");
-            e.preventDefault();
-            if ($(this).hasClass("prev")) {
-                if ($chameleon.find('.carousel-item.active').is(':first-child')) {
-                    $chameleon.find('.carousel-item.active').removeClass("active").parent()
-                        .find('.carousel-item:last-child').addClass("active");
-                } else {
-                    $chameleon.find('.carousel-item.active').removeClass("active")
-                        .prev().addClass("active");
-                }
-            } else if ($(this).hasClass("next")) {
-                if ($chameleon.find('.carousel-item.active').is(':last-child')) {
-                    $chameleon.find('.carousel-item.active').removeClass("active").parent()
-                        .find('.carousel-item:first-child').addClass("active");
-                } else {
-                    $chameleon.find('.carousel-item.active').removeClass("active")
-                        .next().addClass("active");
-                }
-            } else {
-                return;
-            }
-
-        }
-
-        function _clickPreviewImgHandler() {
-            console.log("_clickPreviewImgHandler");
-        }
-
         function _updateImgOrder(index) {
             console.log("_updateImgOrder");
 
@@ -80,10 +50,59 @@
         // public ------------------------
 
         function setJWplayerInstance(jwPlayerInst) {
-            
             jwPlayerInst.onReady(function() {
-         jwPlayerInst.play();
-     });
+                //TODO:
+            });
+
+            jwPlayerInst.onComplete(function() {
+                //TODO:
+            });
+
+            // Move to the target timeslot when the preview image is clicked
+            $chameleon.find('.preview-image').click(function() {
+                var id = $(this).attr("data-index");
+                jwPlayerInst.seek(_parseTime(slides[id - 1].time));
+            });
+
+
+            $chameleon.find('.carousel-control').click(function() {
+                var id = $('.active .cloneditem-2 .preview-image').attr("data-index");
+
+                if ($(this).hasClass("prev")) {
+                    if ($chameleon.find('.carousel-item.active').is(':first-child')) {
+                        $chameleon.find('.carousel-item.active').removeClass("active").parent()
+                            .find('.carousel-item:last-child').addClass("active");
+                    } else {
+                        $chameleon.find('.carousel-item.active').removeClass("active")
+                            .prev().addClass("active");
+                    }
+
+
+                    if (parseInt(id) - 1 == 0) {
+                        id = slides.length;
+                    }
+
+                    jwPlayerInst.seek(_parseTime(slides[id - 1].time));
+
+                } else if ($(this).hasClass("next")) {
+                    if ($chameleon.find('.carousel-item.active').is(':last-child')) {
+                        $chameleon.find('.carousel-item.active').removeClass("active").parent()
+                            .find('.carousel-item:first-child').addClass("active");
+                    } else {
+                        $chameleon.find('.carousel-item.active').removeClass("active")
+                            .next().addClass("active");
+                    }
+
+                    if (id == slides.length) {
+                        id = 0;
+                    }
+
+                    jwPlayerInst.seek(_parseTime(slides[id].time));
+                } else {
+                    return;
+                }
+            });
+
         }
 
         function hook(hookName) {
@@ -158,8 +177,6 @@
             $chameleon.find('.carousel-item').addClass("active");
         }
 
-        $chameleon.find('.carousel-control').click(_clickIndicatorHandler);
-        $chameleon.find('.preview-image').click(_clickPreviewImgHandler);
 
 
         console.log($this.jwplayerInstance);
