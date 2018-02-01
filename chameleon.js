@@ -32,75 +32,76 @@
             $carouselControl = '<a class="prev sync carousel-control">&lt;</a><a class="next sync carousel-control">&gt;</a>',
             jwplayerInstance = {};
 
-        function _updateImgOrder(index) {
-            console.log("_updateImgOrder");
-
+        function _updateSlideOrder(index) {
             var index = parseInt(index) + 1;
             var target = $('.cloneditem-2 .preview-image[data-index="' + index + '"]').parent().parent();
             $('.carousel-item.active').removeClass("active");
             target.addClass("active");
         }
 
-        function _parseTime(time) {
-            // parse time of type string: '00:00:15'
+        function _parseStrTime(time) {
+            // parse time : '00:00:15'
             var hms = time.split(':');
             return (parseInt(hms[0] * 60 * 60) + parseInt(hms[1] * 60) + parseInt(hms[2]));
         }
 
+        function _showSlideHandler(time, duration){
+	        if (slides.length > 5) {
+	             if (time >= _parseStrTime(slides[slides.length - 1].time)) {
+	                 _updateSlideOrder(slides.length - 1);
+	                 $chameleon.find('.slide-wrap').html('<img src="' + slides[slides.length - 1].img + '" data-index="' + slides.length + '"/>');
+	             } else {
+	                 for (var i = 0, j = 1; i < slides.length; i++, j++) {
+	                     if (time >= _parseStrTime(slides[i].time) && time < _parseStrTime(slides[j].time)) {
+	                         _updateSlideOrder(i);
+	                         $chameleon.find('.slide-wrap').html('<img src="' + slides[i].img + '" data-index="' + i + '"/>');
+	                         return;
+	                     }
+	                 }
+	             }
+	         }
+        }
+
         // public ------------------------
 
-        function setJWplayerInstance(jwPlayerInst) {
+        function feeding(jwPlayerInst) {
             jwPlayerInst.onReady(function() {
                 //TODO:
             });
 
-            jwPlayerInst.onComplete(function() {
-                //TODO:
+            jwPlayerInst.onTime(function() {
+               var time = jwPlayerInst.getPosition();
+	           var duration = jwPlayerInst.getDuration();
+	           _showSlideHandler(time, duration);
             });
 
-            // Move to the target timeslot when the preview image is clicked
+            jwPlayerInst.onComplete(function() {
+                $chameleon.find('.slide-wrap').html('<img src="' + slides[0].img + '"/>');
+            });
+
+            // Move to the target timeslot when the slide preview is clicked
             $chameleon.find('.preview-image').click(function() {
                 var id = $(this).attr("data-index");
-                jwPlayerInst.seek(_parseTime(slides[id - 1].time));
+                jwPlayerInst.seek(_parseStrTime(slides[id - 1].time));
             });
 
-
-            $chameleon.find('.carousel-control').click(function() {
-                var id = $('.active .cloneditem-2 .preview-image').attr("data-index");
-
-                if ($(this).hasClass("prev")) {
-                    if ($chameleon.find('.carousel-item.active').is(':first-child')) {
-                        $chameleon.find('.carousel-item.active').removeClass("active").parent()
-                            .find('.carousel-item:last-child').addClass("active");
-                    } else {
-                        $chameleon.find('.carousel-item.active').removeClass("active")
-                            .prev().addClass("active");
-                    }
-
-
-                    if (parseInt(id) - 1 == 0) {
+            $chameleon.find('.carousel-control.prev').click(function() {
+            	var id = $('.active .cloneditem-2 .preview-image').attr("data-index");
+            	id = parseInt(id) - 1;
+            	if (id == 0) {
                         id = slides.length;
                     }
 
-                    jwPlayerInst.seek(_parseTime(slides[id - 1].time));
+                jwPlayerInst.seek(_parseStrTime(slides[id - 1].time));
+            });
 
-                } else if ($(this).hasClass("next")) {
-                    if ($chameleon.find('.carousel-item.active').is(':last-child')) {
-                        $chameleon.find('.carousel-item.active').removeClass("active").parent()
-                            .find('.carousel-item:first-child').addClass("active");
-                    } else {
-                        $chameleon.find('.carousel-item.active').removeClass("active")
-                            .next().addClass("active");
-                    }
-
-                    if (id == slides.length) {
+            $chameleon.find('.carousel-control.next').click(function() {
+            	var id = $('.active .cloneditem-2 .preview-image').attr("data-index");
+            	if (id == slides.length) {
                         id = 0;
                     }
 
-                    jwPlayerInst.seek(_parseTime(slides[id].time));
-                } else {
-                    return;
-                }
+                jwPlayerInst.seek(_parseStrTime(slides[id].time));
             });
 
         }
@@ -172,20 +173,19 @@
                         .appendTo($(this));
                 }
             });
-            _updateImgOrder(0);
+            _updateSlideOrder(0);
         } else {
             $chameleon.find('.carousel-item').addClass("active");
         }
 
 
 
-        console.log($this.jwplayerInstance);
 
 
 
 
         return {
-            setJWplayerInstance: setJWplayerInstance
+            feeding: feeding
         };
 
         //-----------------CHAMLEON--------------------//
