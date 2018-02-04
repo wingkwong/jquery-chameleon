@@ -57,6 +57,7 @@
 }
 
 .preview-wrap .carousel-item{
+	text-align: center;
 	display: none;
 }
 
@@ -87,5 +88,5 @@
 }
 
 .preview-wrap .iWrap{
-	float: left;
+	display: inline-block;
 }
