@@ -116,13 +116,12 @@
                 $chameleon.find('.carousel-item').addClass("active");
             }
 
-
             _feedChameleon();
         }
 
         function _feedChameleon() {
             $this.jwPlayerInst.onReady(function() {
-                //TODO:
+                $('.video-wrap #jwplayer').css("width", "100%").css("height", "100%");
             });
 
             $this.jwPlayerInst.onTime(function() {
@@ -133,6 +132,7 @@
 
             $this.jwPlayerInst.onComplete(function() {
                 $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[0].img + '"/>');
+                _updateSlideOrder(0);
             });
 
             // Move to the target timeslot when the slide preview is clicked
@@ -243,7 +243,7 @@
 
     $.fn[chameleon].defaults = {
         slidePool: {}, // slides JSON object
-        carouselSlide: 12, // number of slides showing in carousel
+        carouselSlide: 6, // number of slides showing in carousel
         downloadVideo: false, // download video button
         downloadTranscript: false, // download transcript button
     };
