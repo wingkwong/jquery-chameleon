@@ -31,7 +31,8 @@
             $previewImage = '<div class="iWrap"><div class="preview-image"><img/></div><div class="slide-number"></div></div>',
             $carouselControl = '<a class="prev sync carousel-control">&lt;</a><a class="next sync carousel-control">&gt;</a>',
             slides = {},
-            jwPlayerInst = {};
+            jwPlayerInst = {},
+            maxImgInARow = 5;
 
         function _init() {
             $chameleon.append($videoWrap).append($slideWrap).append($previewWrap);
@@ -78,7 +79,7 @@
             $chameleon.find('.carousel-item:first').addClass("active");
 
             if ($this.slides.length > o.carouselSlide) {
-                $('.carousel-item').each(function() {
+                $chameleon.find('.carousel-item').each(function() {
                     var itemToClone = $(this);
                     for (var i = 1; i < o.carouselSlide; i++) {
                         itemToClone = itemToClone.next();
@@ -91,12 +92,30 @@
                     }
                 });
 
+                var carouselInnerWidth = $chameleon.find('.carousel-item.active').width();
+                var imageWidth = $chameleon.find('.carousel-item.active .iWrap:first').width();
+                $this.maxImgInARow = Math.floor(carouselInnerWidth / imageWidth);
+
+                if ((o.carouselSlide > $this.maxImgInARow) && $this.maxImgInARow > 5) {
+                    $chameleon.find('.carousel-item .cloneditem-3').addClass("chameleon-main");
+                } else {
+                    var total = $chameleon.find('.carousel-item.active .iWrap').length;
+                    if (Math.floor(total / 2) >= 1) {
+                        var i = $chameleon.find('.carousel-item.active .iWrap:nth-child( ' + Math.floor(total / 2) + ') .preview-image').attr("data-index");
+                        $chameleon.find('.carousel-item .cloneditem-' + i + '').addClass("chameleon-main");
+                    } else {
+                        $chameleon.find('.carousel-control').remove();
+                        $chameleon.find('.carousel-item .iWrap').addClass("chameleon-main");
+                    }
+                }
+
                 _updateSlideOrder(0);
 
             } else {
                 $chameleon.find('.carousel-control').remove();
                 $chameleon.find('.carousel-item').addClass("active");
             }
+
 
             _feedChameleon();
         }
@@ -123,7 +142,7 @@
             });
 
             $chameleon.find('.carousel-control.prev').click(function() {
-                var id = $('.active .cloneditem-2 .preview-image').attr("data-index");
+                var id = $('.active .chameleon-main .preview-image').attr("data-index");
                 id = parseInt(id) - 1;
                 if (id == 0) {
                     id = $this.slides.length;
@@ -133,7 +152,7 @@
             });
 
             $chameleon.find('.carousel-control.next').click(function() {
-                var id = $chameleon.find('.active .cloneditem-2 .preview-image').attr("data-index");
+                var id = $chameleon.find('.active .chameleon-main .preview-image').attr("data-index");
                 if (id == $this.slides.length) {
                     id = 0;
                 }
@@ -145,7 +164,7 @@
 
         function _updateSlideOrder(index) {
             var index = parseInt(index) + 1;
-            var target = $('.cloneditem-2 .preview-image[data-index="' + index + '"]').parent().parent();
+            var target = $('.chameleon-main .preview-image[data-index="' + index + '"]').parent().parent();
             $('.carousel-item.active').removeClass("active");
             target.addClass("active");
         }
@@ -169,7 +188,6 @@
                             _updateSlideOrder(i);
                         }
                         $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[i].img + '" data-index="' + i + '"/>');
-                        //return;
                     }
                 }
             }
@@ -225,7 +243,7 @@
 
     $.fn[chameleon].defaults = {
         slidePool: {}, // slides JSON object
-        carouselSlide: 9, // number of slides showing in carousel
+        carouselSlide: 12, // number of slides showing in carousel
         downloadVideo: false, // download video button
         downloadTranscript: false, // download transcript button
     };
