@@ -30,8 +30,7 @@
 
 .carousel-wrap{
 	background: #e6e6e6;
-    padding-left: 75px;
-    padding-top: 15px;
+    padding: 15px 75px 0px 75px;
     position: relative;
     overflow: hidden;
 }
@@ -65,9 +64,19 @@
 	display: block;
 }
 
+.preview-wrap .carousel-item .preview-image{
+	margin: 0 5px;
+}
+
+.preview-wrap .preview-image{
+	border: 5px solid transparent;
+}
+
+.preview-wrap .chameleon-main .preview-image{
+	border: 5px solid red;
+}
+
 .preview-wrap .preview-image img{
-padding-left: 10px;
-    padding-right: 10px;
     width: 100px;
     cursor: pointer;
 }
