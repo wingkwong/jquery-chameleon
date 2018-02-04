@@ -1,12 +1,13 @@
 .chameleon{
 	width: 1024px;
-	height: 300px;
+	height: 341px;
 }
 
 .video-wrap{
 	float: left;
 	width: 50%;
 }
+
 
 .slide-wrap{
 	width: 50%;
@@ -16,7 +17,7 @@
 .slide-wrap img{    
 	display: block;
     max-width: 100%;
-    height: auto;
+    height: 100%;
 	width: 100%;
 }
 
