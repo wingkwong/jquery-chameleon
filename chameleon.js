@@ -36,14 +36,14 @@
         function _init() {
             $chameleon.append($videoWrap).append($slideWrap).append($previewWrap);
 
-            if (typeof o.slidePool === "object") {
-                if (typeof o.slidePool.slides != "undefined" && o.slidePool.slides.length > 0) {
-                    $this.slides = o.slidePool.slides;
-                    _buildHabitat();
-                } else {
-                    return;
-                }
-            }
+            // if (typeof o.slidePool === "object") {
+            //     if (typeof o.slidePool.slides != "undefined" && o.slidePool.slides.length > 0) {
+            //         $this.slides = o.slidePool.slides;
+            //         _buildHabitat();
+            //     } else {
+            //         return;
+            //     }
+            // }
 
             if (typeof o.slidePool === "string") {
                 var regex = /(?:\.([^.]+))?$/;
@@ -94,6 +94,7 @@
                 _updateSlideOrder(0);
 
             } else {
+                $chameleon.find('.carousel-control').remove();
                 $chameleon.find('.carousel-item').addClass("active");
             }
 
@@ -132,7 +133,7 @@
             });
 
             $chameleon.find('.carousel-control.next').click(function() {
-                var id = $('.active .cloneditem-2 .preview-image').attr("data-index");
+                var id = $chameleon.find('.active .cloneditem-2 .preview-image').attr("data-index");
                 if (id == $this.slides.length) {
                     id = 0;
                 }
@@ -156,17 +157,19 @@
         }
 
         function _showSlideHandler(time, duration) {
-            if ($this.slides.length > 5) {
-                if (time >= _parseStrTime($this.slides[$this.slides.length - 1].time)) {
+            if (time >= _parseStrTime($this.slides[$this.slides.length - 1].time)) {
+                if ($this.slides.length > o.carouselSlide) {
                     _updateSlideOrder($this.slides.length - 1);
-                    $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[$this.slides.length - 1].img + '" data-index="' + $this.slides.length + '"/>');
-                } else {
-                    for (var i = 0, j = 1; i < $this.slides.length; i++, j++) {
-                        if (time >= _parseStrTime($this.slides[i].time) && time < _parseStrTime($this.slides[j].time)) {
+                }
+                $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[$this.slides.length - 1].img + '" data-index="' + $this.slides.length + '"/>');
+            } else {
+                for (var i = 0, j = 1; i < $this.slides.length; i++, j++) {
+                    if (time >= _parseStrTime($this.slides[i].time) && time < _parseStrTime($this.slides[j].time)) {
+                        if ($this.slides.length > o.carouselSlide) {
                             _updateSlideOrder(i);
-                            $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[i].img + '" data-index="' + i + '"/>');
-                            return;
                         }
+                        $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[i].img + '" data-index="' + i + '"/>');
+                        //return;
                     }
                 }
             }
@@ -222,7 +225,7 @@
 
     $.fn[chameleon].defaults = {
         slidePool: {}, // slides JSON object
-        carouselSlide: 5, // number of slides showing in carousel
+        carouselSlide: 9, // number of slides showing in carousel
         downloadVideo: false, // download video button
         downloadTranscript: false, // download transcript button
     };
