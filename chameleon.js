@@ -243,8 +243,6 @@
 
     $.fn[chameleon].defaults = {
         slidePool: {}, // slides JSON object
-        carouselSlide: 6, // number of slides showing in carousel
-        downloadVideo: false, // download video button
-        downloadTranscript: false, // download transcript button
+        carouselSlide: 6 // number of slides showing in carousel
     };
 }));
