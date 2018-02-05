@@ -37,14 +37,14 @@
         function _init() {
             $chameleon.append($videoWrap).append($slideWrap).append($previewWrap);
 
-            // if (typeof o.slidePool === "object") {
-            //     if (typeof o.slidePool.slides != "undefined" && o.slidePool.slides.length > 0) {
-            //         $this.slides = o.slidePool.slides;
-            //         _buildHabitat();
-            //     } else {
-            //         return;
-            //     }
-            // }
+            if (typeof o.slidePool === "object") {
+                if (typeof o.slidePool.slides != "undefined" && o.slidePool.slides.length > 0) {
+                    $this.slides = o.slidePool.slides;
+                    _buildHabitat();
+                } else {
+                    return;
+                }
+            }
 
             if (typeof o.slidePool === "string") {
                 var regex = /(?:\.([^.]+))?$/;
@@ -120,21 +120,6 @@
         }
 
         function _feedChameleon() {
-            $this.jwPlayerInst.onReady(function() {
-                $('.video-wrap #jwplayer').css("width", "100%").css("height", "100%");
-            });
-
-            $this.jwPlayerInst.onTime(function() {
-                var time = $this.jwPlayerInst.getPosition();
-                var duration = $this.jwPlayerInst.getDuration();
-                _showSlideHandler(time, duration);
-            });
-
-            $this.jwPlayerInst.onComplete(function() {
-                $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[0].img + '"/>');
-                _updateSlideOrder(0);
-            });
-
             // Move to the target timeslot when the slide preview is clicked
             $chameleon.find('.preview-image').click(function() {
                 var id = $(this).attr("data-index");
@@ -196,6 +181,21 @@
         // public ------------------------
         function setJWPlayerInst(jwPlayerInst) {
             $this.jwPlayerInst = jwPlayerInst;
+
+            $this.jwPlayerInst.onReady(function() {
+                $('.video-wrap #jwplayer').css("width", "100%").css("height", "100%");
+            });
+
+            $this.jwPlayerInst.onTime(function() {
+                var time = $this.jwPlayerInst.getPosition();
+                var duration = $this.jwPlayerInst.getDuration();
+                _showSlideHandler(time, duration);
+            });
+
+            $this.jwPlayerInst.onComplete(function() {
+                $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[0].img + '"/>');
+                _updateSlideOrder(0);
+            });
         }
 
         function hook(hookName) {
