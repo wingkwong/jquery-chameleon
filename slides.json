@@ -1,4 +1,8 @@
 {  
+   "jwplayerKey": "/B8fvkCam6FLJZFyUAIqazXzVKgfj0JD2xLtkSILUg8=",
+   "jwplayerSetup" : {
+   		"file": "http://cdn.jwplayer.com/videos/8L4m9FJB-Zq6530MP.mp4"
+   },
    "slides":[  
       {  
          "time":"00:00:00",
