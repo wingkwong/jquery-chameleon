@@ -1,5 +1,5 @@
 /**
- * chameleon.js - Video with images synced
+ * chameleon.js - Sychronizing JWPlayer videos and slides
  * @author Wing Kam Wong - wingkwong.code@gmail.com
  */
 ;
@@ -36,6 +36,8 @@
 
         function _init() {
             $chameleon.append($videoWrap).append($slideWrap).append($previewWrap);
+
+            $chameleon.css("width", o.width).css("height", o.height);
 
             if (typeof o.slidePool === "object") {
                 if (typeof o.slidePool.slides != "undefined" && o.slidePool.slides.length > 0) {
@@ -78,10 +80,10 @@
 
             $chameleon.find('.carousel-item:first').addClass("active");
 
-            if ($this.slides.length > o.carouselSlide) {
+            if ($this.slides.length > o.numOfCarouselSlide) {
                 $chameleon.find('.carousel-item').each(function() {
                     var itemToClone = $(this);
-                    for (var i = 1; i < o.carouselSlide; i++) {
+                    for (var i = 1; i < o.numOfCarouselSlide; i++) {
                         itemToClone = itemToClone.next();
                         if (!itemToClone.length) {
                             itemToClone = $(this).siblings(':first');
@@ -96,7 +98,7 @@
                 var imageWidth = $chameleon.find('.carousel-item.active .iWrap:first').width();
                 $this.maxImgInARow = Math.floor(carouselInnerWidth / imageWidth);
 
-                if ((o.carouselSlide > $this.maxImgInARow) && $this.maxImgInARow > 5) {
+                if ((o.numOfCarouselSlide > $this.maxImgInARow) && $this.maxImgInARow > 5) {
                     $chameleon.find('.carousel-item .cloneditem-3').addClass("chameleon-main");
                 } else {
                     var total = $chameleon.find('.carousel-item.active .iWrap').length;
@@ -162,14 +164,14 @@
 
         function _showSlideHandler(time, duration) {
             if (time >= _parseStrTime($this.slides[$this.slides.length - 1].time)) {
-                if ($this.slides.length > o.carouselSlide) {
+                if ($this.slides.length > o.numOfCarouselSlide) {
                     _updateSlideOrder($this.slides.length - 1);
                 }
                 $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[$this.slides.length - 1].img + '" data-index="' + $this.slides.length + '"/>');
             } else {
                 for (var i = 0, j = 1; i < $this.slides.length; i++, j++) {
                     if (time >= _parseStrTime($this.slides[i].time) && time < _parseStrTime($this.slides[j].time)) {
-                        if ($this.slides.length > o.carouselSlide) {
+                        if ($this.slides.length > o.numOfCarouselSlide) {
                             _updateSlideOrder(i);
                         }
                         $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[i].img + '" data-index="' + i + '"/>');
@@ -242,7 +244,9 @@
     };
 
     $.fn[chameleon].defaults = {
-        slidePool: {}, // slides JSON object
-        carouselSlide: 6 // number of slides showing in carousel
+        width: '1024px',            // width of chameleon container
+        height: '300px',            // height of chameleon container
+        slidePool: {},              // slides JSON file / object 
+        numOfCarouselSlide: 6       // number of slides showing in carousel
     };
 }));
