@@ -30,18 +30,18 @@
             $carouselItem = '<div class="carousel-item"></div>',
             $previewImage = '<div class="iWrap"><div class="preview-image"><img/></div><div class="slide-number"></div></div>',
             $carouselControl = '<a class="prev sync carousel-control">&lt;</a><a class="next sync carousel-control">&gt;</a>',
-            slides = {},
+            chameleonObj = {},
             jwPlayerInst = {},
             maxImgInARow = 5;
 
-        function _init() {
+        function _initChameleon() {
             $chameleon.append($videoWrap).append($slideWrap).append($previewWrap);
 
             $chameleon.css("width", o.width).css("height", o.height);
 
             if (typeof o.slidePool === "object") {
                 if (typeof o.slidePool.slides != "undefined" && o.slidePool.slides.length > 0) {
-                    $this.slides = o.slidePool.slides;
+                    $this.chameleonObj = o.slidePool;
                     _buildHabitat();
                 } else {
                     return;
@@ -53,7 +53,7 @@
 
                 if (regex.exec(o.slidePool)[1] == "json") {
                     $.getJSON(o.slidePool, function(data) {
-                        $this.slides = data.slides;
+                        $this.chameleonObj = data;
                     }).done(function() {
                         _buildHabitat();
                     });
@@ -61,26 +61,52 @@
                     return;
                 }
             }
+
+           
+        }
+
+        function _initJWPlayer(){
+            jwplayer.key = $this.chameleonObj.jwplayerKey;
+
+            $this.jwPlayerInst = jwplayer("jwplayer").setup( $this.chameleonObj.jwplayerSetup);
+
+            $this.jwPlayerInst.onReady(function() {
+                $('.video-wrap #jwplayer').css("width", "100%").css("height", "100%");
+            });
+
+            $this.jwPlayerInst.onTime(function() {
+                var time = $this.jwPlayerInst.getPosition();
+                var duration = $this.jwPlayerInst.getDuration();
+                _showSlideHandler(time, duration);
+            });
+
+            $this.jwPlayerInst.onComplete(function() {
+                $chameleon.find('.slide-wrap').html('<img src="' + $this.chameleonObj.slides[0].img + '"/>');
+                _updateSlideOrder(0);
+            });
         }
 
         function _buildHabitat() {
+
+             _initJWPlayer();
+
             // Slide Wrap
-            $chameleon.find('.slide-wrap img').attr('src', $this.slides[0].img);
+            $chameleon.find('.slide-wrap img').attr('src', $this.chameleonObj.slides[0].img);
 
             // Carousel for previewing slides
             $chameleon.find('.preview-wrap').append($carouselWrap).append($carouselControl);
 
-            for (var i = 1; i <= $this.slides.length; i++) {
+            for (var i = 1; i <= $this.chameleonObj.slides.length; i++) {
                 var $cItem = $($carouselItem).append($previewImage);
                 $cItem.find('.preview-image').attr('data-index', i);
-                $cItem.find('.preview-image img').attr('src', $this.slides[i - 1].img);
-                $cItem.find('.slide-number').html((i) + '/' + $this.slides.length);
+                $cItem.find('.preview-image img').attr('src', $this.chameleonObj.slides[i - 1].img);
+                $cItem.find('.slide-number').html((i) + '/' + $this.chameleonObj.slides.length);
                 $chameleon.find('.carousel-wrap').append($cItem);
             }
 
             $chameleon.find('.carousel-item:first').addClass("active");
 
-            if ($this.slides.length > o.numOfCarouselSlide) {
+            if ($this.chameleonObj.slides.length > o.numOfCarouselSlide) {
                 $chameleon.find('.carousel-item').each(function() {
                     var itemToClone = $(this);
                     for (var i = 1; i < o.numOfCarouselSlide; i++) {
@@ -125,26 +151,26 @@
             // Move to the target timeslot when the slide preview is clicked
             $chameleon.find('.preview-image').click(function() {
                 var id = $(this).attr("data-index");
-                $this.jwPlayerInst.seek(_parseStrTime($this.slides[id - 1].time));
+                $this.jwPlayerInst.seek(_parseStrTime($this.chameleonObj.slides[id - 1].time));
             });
 
             $chameleon.find('.carousel-control.prev').click(function() {
                 var id = $('.active .chameleon-main .preview-image').attr("data-index");
                 id = parseInt(id) - 1;
                 if (id == 0) {
-                    id = $this.slides.length;
+                    id = $this.chameleonObj.slides.length;
                 }
 
-                $this.jwPlayerInst.seek(_parseStrTime($this.slides[id - 1].time));
+                $this.jwPlayerInst.seek(_parseStrTime($this.chameleonObj.slides[id - 1].time));
             });
 
             $chameleon.find('.carousel-control.next').click(function() {
                 var id = $chameleon.find('.active .chameleon-main .preview-image').attr("data-index");
-                if (id == $this.slides.length) {
+                if (id == $this.chameleonObj.slides.length) {
                     id = 0;
                 }
 
-                $this.jwPlayerInst.seek(_parseStrTime($this.slides[id].time));
+                $this.jwPlayerInst.seek(_parseStrTime($this.chameleonObj.slides[id].time));
             });
 
         }
@@ -163,41 +189,21 @@
         }
 
         function _showSlideHandler(time, duration) {
-            if (time >= _parseStrTime($this.slides[$this.slides.length - 1].time)) {
-                if ($this.slides.length > o.numOfCarouselSlide) {
-                    _updateSlideOrder($this.slides.length - 1);
+            if (time >= _parseStrTime($this.chameleonObj.slides[$this.chameleonObj.slides.length - 1].time)) {
+                if ($this.chameleonObj.slides.length > o.numOfCarouselSlide) {
+                    _updateSlideOrder($this.chameleonObj.slides.length - 1);
                 }
-                $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[$this.slides.length - 1].img + '" data-index="' + $this.slides.length + '"/>');
+                $chameleon.find('.slide-wrap').html('<img src="' + $this.chameleonObj.slides[$this.chameleonObj.slides.length - 1].img + '" data-index="' + $this.chameleonObj.slides.length + '"/>');
             } else {
-                for (var i = 0, j = 1; i < $this.slides.length; i++, j++) {
-                    if (time >= _parseStrTime($this.slides[i].time) && time < _parseStrTime($this.slides[j].time)) {
-                        if ($this.slides.length > o.numOfCarouselSlide) {
+                for (var i = 0, j = 1; i < $this.chameleonObj.slides.length; i++, j++) {
+                    if (time >= _parseStrTime($this.chameleonObj.slides[i].time) && time < _parseStrTime($this.chameleonObj.slides[j].time)) {
+                        if ($this.chameleonObj.slides.length > o.numOfCarouselSlide) {
                             _updateSlideOrder(i);
                         }
-                        $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[i].img + '" data-index="' + i + '"/>');
+                        $chameleon.find('.slide-wrap').html('<img src="' + $this.chameleonObj.slides[i].img + '" data-index="' + i + '"/>');
                     }
                 }
             }
-        }
-
-        // public ------------------------
-        function setJWPlayerInst(jwPlayerInst) {
-            $this.jwPlayerInst = jwPlayerInst;
-
-            $this.jwPlayerInst.onReady(function() {
-                $('.video-wrap #jwplayer').css("width", "100%").css("height", "100%");
-            });
-
-            $this.jwPlayerInst.onTime(function() {
-                var time = $this.jwPlayerInst.getPosition();
-                var duration = $this.jwPlayerInst.getDuration();
-                _showSlideHandler(time, duration);
-            });
-
-            $this.jwPlayerInst.onComplete(function() {
-                $chameleon.find('.slide-wrap').html('<img src="' + $this.slides[0].img + '"/>');
-                _updateSlideOrder(0);
-            });
         }
 
         function hook(hookName) {
@@ -208,11 +214,7 @@
 
         //-----------------CHAMLEON--------------------//
 
-        _init();
-
-        return {
-            setJWPlayerInst: setJWPlayerInst
-        };
+        _initChameleon();
 
         //-----------------CHAMLEON--------------------//
     }
