@@ -5,14 +5,14 @@
 
 
 .slide-wrap{
-	width: 50%;
+	width: 47%;
+	margin-left: 3%;
 	float: left;
 }
 
 .slide-wrap img{    
 	display: block;
     max-width: 100%;
-    height: 100%;
 	width: 100%;
 }
 
@@ -21,6 +21,7 @@
 	float: left;
 	position: relative;
     overflow: hidden;
+    margin-top: 20px;
 }
 
 
@@ -38,14 +39,15 @@
     font-size: 35px;
     font-weight: 100;
     line-height: 40px;
-    background: #000;
     padding: 5px;
-    color: #fff;
+    padding-top: 5%;
+    color: #000;
     width: 40px;
-    height: 40px;
+    height: 100%;
     display: block;
-    top: 35%;
+    top: 0;
     text-align: center;
+    cursor: pointer;
 }
 
 .carousel-control.next{
@@ -80,7 +82,7 @@
 }
 
 .preview-wrap .slide-number{
-	padding: 10px 0px 10px 10px;
+	padding: 10px 0px;
 	text-align: center;
 }
 
