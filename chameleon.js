@@ -150,7 +150,17 @@
             $this.jwPlayerInst = jwplayer("jwplayer").setup( $this.chameleonContext.jwplayerSetup);
 
             $this.jwPlayerInst.onReady(function() {
-                $('.video-wrap #jwplayer').css("width", "100%").css("height", "100%");
+                $chameleon.find('.video-wrap #jwplayer').css("width", "100%").css("height", "100%");
+
+                var $videoWrap = $chameleon.find('.video-wrap');
+                var $slideWrap = $chameleon.find('.slide-wrap');
+
+                if($videoWrap.height() > $slideWrap.height()){
+                    $slideWrap.css("margin-top", ($videoWrap.height()-$slideWrap.height())/2);
+                }else{
+                    $videoWrap.css("margin-top", ($slideWrap.height()-$videoWrap.height())/2);
+                }
+
             });
 
             $this.jwPlayerInst.onTime(function() {
