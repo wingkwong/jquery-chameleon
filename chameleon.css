@@ -16,12 +16,25 @@
 	width: 100%;
 }
 
+.download-wrap{
+	float: left;
+    width: 100%;
+    background: #ddd;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.download-btn{
+	display: inline-block;
+ 	margin-right: 10px;
+ 	cursor: pointer;
+}
+
 .preview-wrap{
 	width: 100%;
 	float: left;
 	position: relative;
     overflow: hidden;
-    margin-top: 20px;
 }
 
 
@@ -64,21 +77,10 @@
 	display: block;
 }
 
-.preview-wrap .carousel-item .preview-image{
-	margin: 0 5px;
-}
-
-.preview-wrap .preview-image{
-	border: 5px solid transparent;
-}
-
-.preview-wrap .chameleon-main .preview-image{
-	border: 5px solid red;
-}
-
 .preview-wrap .preview-image img{
     width: 100px;
     cursor: pointer;
+    padding: 0px 10px;
 }
 
 .preview-wrap .slide-number{

@@ -3,6 +3,11 @@
    "jwplayerSetup" : {
    		"file": "http://cdn.jwplayer.com/videos/8L4m9FJB-Zq6530MP.mp4"
    },
+   "download": {
+   		"slides": "xxxx",
+   		"video": "xxx",
+   		"transcript": "xxxxx"
+   },
    "slides":[  
       {  
          "time":"00:00:00",
