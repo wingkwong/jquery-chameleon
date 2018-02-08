@@ -154,25 +154,55 @@
                     $chameleon.find('.download-wrap').remove();
                 }
 
-                if(typeof $this.chameleonContext.download.slides != "undefined" && typeof $this.chameleonContext.download.slides === "string"){
-                    //slides
-                    $chameleon.find('.download-wrap').append('<a class="download-btn download-slides">Download slides</a>');
-                    $chameleon.find('.download-slides').attr("href", $this.chameleonContext.download.slides);
-                    $chameleon.find('.download-slides').attr("title", "Download slides");
+                if(typeof $this.chameleonContext.download.slides != "undefined" 
+                    && typeof $this.chameleonContext.download.slides === "object"){
+                  
+                    if(typeof $this.chameleonContext.download.slides.url != "undefined" 
+                        && typeof $this.chameleonContext.download.slides.url === "string" ){
+                        $chameleon.find('.download-wrap').append('<a class="download-btn download-slides">Download slides</a>');
+                        $chameleon.find('.download-slides').attr("href", $this.chameleonContext.download.slides.url);
+                    }
+
+                    if($chameleon.find('.download-slides').length > 0 
+                        && typeof $this.chameleonContext.download.slides.title != "undefined" 
+                        && typeof $this.chameleonContext.download.slides.title === "string" ){
+                        $chameleon.find('.download-slides').html($this.chameleonContext.download.slides.title);
+                        $chameleon.find('.download-slides').attr("title", $this.chameleonContext.download.slides.title);
+                    }
+
+
                 }
 
-                if(typeof $this.chameleonContext.download.video != "undefined" && typeof $this.chameleonContext.download.video === "string"){
-                    //video
-                    $chameleon.find('.download-wrap').append('<a class="download-btn download-video">Download video</a>');
-                    $chameleon.find('.download-video').attr("href", $this.chameleonContext.download.video);
-                    $chameleon.find('.download-video').attr("title", "Download video");
+                if(typeof $this.chameleonContext.download.video != "undefined" 
+                    && typeof $this.chameleonContext.download.video === "object"){
+                    if(typeof $this.chameleonContext.download.video.url != "undefined" 
+                        && typeof $this.chameleonContext.download.video.url === "string" ){
+                        $chameleon.find('.download-wrap').append('<a class="download-btn download-video">Download video</a>');
+                        $chameleon.find('.download-video').attr("href", $this.chameleonContext.download.video.url);
+                    }
+
+                    if($chameleon.find('.download-video').length > 0 
+                        && typeof $this.chameleonContext.download.video.title != "undefined" 
+                        && typeof $this.chameleonContext.download.video.title === "string" ){
+                        $chameleon.find('.download-video').html($this.chameleonContext.download.video.title);
+                        $chameleon.find('.download-video').attr("title", $this.chameleonContext.download.video.title);
+                    }
                 }
 
-                if(typeof $this.chameleonContext.download.transcript != "undefined" && typeof $this.chameleonContext.download.transcript === "string"){
-                    //transcript
-                    $chameleon.find('.download-wrap').append('<a class="download-btn download-transcript">Download transcript</a>');
-                    $chameleon.find('.download-transcript').attr("href", $this.chameleonContext.download.transcript);
-                    $chameleon.find('.download-transcript').attr("title", "Download transcript");
+                if(typeof $this.chameleonContext.download.transcript != "undefined" 
+                    && typeof $this.chameleonContext.download.transcript === "object"){
+                    if(typeof $this.chameleonContext.download.transcript.url != "undefined" 
+                        && typeof $this.chameleonContext.download.transcript.url === "string" ){
+                        $chameleon.find('.download-wrap').append('<a class="download-btn download-transcript">Download transcript</a>');
+                        $chameleon.find('.download-transcript').attr("href", $this.chameleonContext.download.transcript.url);
+                    }
+
+                    if($chameleon.find('.download-transcript').length > 0 
+                        && typeof $this.chameleonContext.download.transcript.title != "undefined" 
+                        && typeof $this.chameleonContext.download.transcript.title === "string" ){
+                        $chameleon.find('.download-transcript').html($this.chameleonContext.download.transcript.title);
+                        $chameleon.find('.download-transcript').attr("title", $this.chameleonContext.download.transcript.title);
+                    }
                 }
             }
 
