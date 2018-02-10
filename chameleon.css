@@ -1,22 +1,22 @@
-.video-wrap{
+.video-container{
 	float: left;
 	width: 50%;
 }
 
 
-.slide-wrap{
+.slide-container{
 	width: 47%;
 	margin-left: 3%;
 	float: left;
 }
 
-.slide-wrap img{    
+.slide-container img{    
 	display: block;
     max-width: 100%;
 	width: 100%;
 }
 
-.download-wrap{
+.download-container{
 	float: left;
     width: 100%;
     background: #ddd;
@@ -30,7 +30,7 @@
  	cursor: pointer;
 }
 
-.preview-wrap{
+.carousel-container{
 	width: 100%;
 	float: left;
 	position: relative;
@@ -38,7 +38,7 @@
 }
 
 
-.carousel-wrap{
+.preview-slide-container{
 	background: #e6e6e6;
     padding: 15px 75px 0px 75px;
     position: relative;
@@ -68,26 +68,26 @@
 	right: 0;
 }
 
-.preview-wrap .carousel-item{
+.carousel-container .carousel-item{
 	text-align: center;
 	display: none;
 }
 
-.preview-wrap .carousel-item.active{
+.carousel-container .carousel-item.active{
 	display: block;
 }
 
-.preview-wrap .preview-image img{
+.carousel-container .slide-image img{
     width: 100px;
     cursor: pointer;
     padding: 0px 10px;
 }
 
-.preview-wrap .slide-number{
+.carousel-container .slide-number{
 	padding: 10px 0px;
 	text-align: center;
 }
 
-.preview-wrap .iWrap{
+.carousel-container .thumbnail-container{
 	display: inline-block;
 }

@@ -1,6 +1,16 @@
 /**
- * chameleon.js - Sychronizing JWPlayer videos and slides
+ * 
+ *   _____ _    _          __  __ ______ _      ______ ____  _   _ 
+ *  / ____| |  | |   /\   |  \/  |  ____| |    |  ____/ __ \| \ | |
+ * | |    | |__| |  /  \  | \  / | |__  | |    | |__ | |  | |  \| |
+ * | |    |  __  | / /\ \ | |\/| |  __| | |    |  __|| |  | | . ` |
+ * | |____| |  | |/ ____ \| |  | | |____| |____| |___| |__| | |\  |
+ *  \_____|_|  |_/_/    \_\_|  |_|______|______|______\____/|_| \_|
+ *                                                                 
+ *                                                                 
+ * chameleon.js - Sychronizing slides with JWPlayer Video
  * @author Wing Kam Wong - wingkwong.code@gmail.com
+ * @version - 1.0.0
  */
 ;
 (function(factory) {
@@ -23,14 +33,14 @@
 
         var $chameleon = $('.chameleon'),
             $this = $(this),
-            $videoWrap = '<div class="video-wrap"><div id="jwplayer"></div></div>',
-            $slideWrap = '<div class="slide-wrap"><img/></div>',
-            $downloadWrap = '<div class="download-wrap"></div>',
-            $previewWrap = '<div class="preview-wrap"></div>',
-            $carouselWrap = '<div class="carousel-wrap"></div>',
+            $videoContainer = '<div class="video-container"><div id="jwplayer"></div></div>',
+            $slideContainer = '<div class="slide-container"><img/></div>',
+            $downloadContainer = '<div class="download-container"></div>',
+            $carouselContainer = '<div class="carousel-container"></div>',
+            $previewSlideContainer = '<div class="preview-slide-container"></div>',
             $carouselItem = '<div class="carousel-item"></div>',
-            $previewImage = '<div class="iWrap"><div class="preview-image"><img/></div><div class="slide-number"></div></div>',
-            $carouselControl = '<a class="prev sync carousel-control">&lt;</a><a class="next sync carousel-control">&gt;</a>',
+            $previewImage = '<div class="thumbnail-container"><div class="slide-image"><img/></div><div class="slide-number"></div></div>',
+            $carouselControl = '<a class="carousel-control prev">&lt;</a><a class="carousel-control next">&gt;</a>',
             chameleonContext = {},
             jwPlayerInst = {},
             maxImgInARow = 5;
@@ -40,7 +50,7 @@
                 throw new Error("Chameleon chameleonContext hasn't been defined.");
             }
 
-            $chameleon.append($videoWrap).append($slideWrap).append($downloadWrap).append($previewWrap);
+            $chameleon.append($videoContainer).append($slideContainer).append($downloadContainer).append($carouselContainer);
 
             $chameleon.css("width", o.width).css("height", o.height);
 
@@ -88,20 +98,20 @@
 
             _initJWPlayer();
 
-            // Slide Wrap
-            _setThumbnail(0);
+            // Slide Container
+            _setSlide(0);
 
-            // Carousel for previewing slides
-            $chameleon.find('.preview-wrap').append($carouselWrap).append($carouselControl);
+            // Slides Carousel
+            $chameleon.find('.carousel-container').append($previewSlideContainer).append($carouselControl);
 
             for (var i = 1; i <= $this.chameleonContext.slides.length; i++) {
                 var $cItem = $($carouselItem).append($previewImage);
-                $cItem.find('.preview-image').attr('data-index', i);
-                $cItem.find('.preview-image img').attr('src', $this.chameleonContext.slides[i - 1].img);
-                $cItem.find('.preview-image img').attr('title', $this.chameleonContext.slides[i - 1].title);
-                $cItem.find('.preview-image img').attr('alt', $this.chameleonContext.slides[i - 1].alt);
+                $cItem.find('.slide-image').attr('data-index', i);
+                $cItem.find('.slide-image img').attr('src', $this.chameleonContext.slides[i - 1].img);
+                $cItem.find('.slide-image img').attr('title', $this.chameleonContext.slides[i - 1].title);
+                $cItem.find('.slide-image img').attr('alt', $this.chameleonContext.slides[i - 1].alt);
                 $cItem.find('.slide-number').html((i) + '/' + $this.chameleonContext.slides.length);
-                $chameleon.find('.carousel-wrap').append($cItem);
+                $chameleon.find('.preview-slide-container').append($cItem);
             }
 
             $chameleon.find('.carousel-item:first').addClass("active");
@@ -115,45 +125,45 @@
                             itemToClone = $(this).siblings(':first');
                         }
                         itemToClone.children(':first-child').clone()
-                            .addClass("cloneditem-" + (i))
+                            .addClass("js-chameleon-" + (i))
                             .appendTo($(this));
                     }
                 });
 
                 var carouselInnerWidth = $chameleon.find('.carousel-item.active').width();
-                var imageWidth = $chameleon.find('.carousel-item.active .iWrap:first').width();
+                var imageWidth = $chameleon.find('.carousel-item.active .thumbnail-container:first').width();
                 $this.maxImgInARow = Math.floor(carouselInnerWidth / imageWidth);
 
                 if ((o.numOfCarouselSlide > $this.maxImgInARow) && $this.maxImgInARow > 5) {
-                    $chameleon.find('.carousel-item .cloneditem-3').addClass("chameleon-main");
+                    $chameleon.find('.carousel-item .js-chameleon-3').addClass("current-slide");
                 } else {
-                    var total = $chameleon.find('.carousel-item.active .iWrap').length;
+                    var total = $chameleon.find('.carousel-item.active .thumbnail-container').length;
                     if (Math.floor(total / 2) >= 1) {
-                        var i = $chameleon.find('.carousel-item.active .iWrap:nth-child( ' + Math.floor(total / 2) + ') .preview-image').attr("data-index");
-                        $chameleon.find('.carousel-item .cloneditem-' + i + '').addClass("chameleon-main");
+                        var i = $chameleon.find('.carousel-item.active .thumbnail-container:nth-child( ' + Math.floor(total / 2) + ') .slide-image').attr("data-index");
+                        $chameleon.find('.carousel-item .js-chameleon-' + i + '').addClass("current-slide");
                     } else {
                         $chameleon.find('.carousel-control').remove();
-                        $chameleon.find('.carousel-item .iWrap').addClass("chameleon-main");
+                        $chameleon.find('.carousel-item .thumbnail-container').addClass("current-slide");
                     }
                 }
 
-                $chameleon.find('.chameleon-main img').css("width", "120px");
+                $chameleon.find('.current-slide img').css("width", "120px");
 
-                _updateSlideOrder(0);
+                _updateSlideCarouel(0);
 
             } else {
                 $chameleon.find('.carousel-control').remove();
                 $chameleon.find('.carousel-item').addClass("active");
             }
 
-            // Download Wrap
+            // Download Container
             if(!$.isEmptyObject($this.chameleonContext.download)){
 
                 if(typeof $this.chameleonContext.download.slides === "undefined" 
                     && typeof $this.chameleonContext.download.videos === "undefined" 
                     && typeof $this.chameleonContext.download.transcript === "undefined" 
                 ){
-                    $chameleon.find('.download-wrap').remove();
+                    $chameleon.find('.download-container').remove();
                 }
 
                 if(typeof $this.chameleonContext.download.slides != "undefined" 
@@ -161,7 +171,7 @@
                   
                     if(typeof $this.chameleonContext.download.slides.url != "undefined" 
                         && typeof $this.chameleonContext.download.slides.url === "string" ){
-                        $chameleon.find('.download-wrap').append('<a class="download-btn download-slides">Download slides</a>');
+                        $chameleon.find('.download-container').append('<a class="download-btn download-slides" target="_blank">Download slides</a>');
                         $chameleon.find('.download-slides').attr("href", $this.chameleonContext.download.slides.url);
                     }
 
@@ -179,7 +189,7 @@
                     && typeof $this.chameleonContext.download.video === "object"){
                     if(typeof $this.chameleonContext.download.video.url != "undefined" 
                         && typeof $this.chameleonContext.download.video.url === "string" ){
-                        $chameleon.find('.download-wrap').append('<a class="download-btn download-video">Download video</a>');
+                        $chameleon.find('.download-container').append('<a class="download-btn download-video" target="_blank">Download video</a>');
                         $chameleon.find('.download-video').attr("href", $this.chameleonContext.download.video.url);
                     }
 
@@ -195,7 +205,7 @@
                     && typeof $this.chameleonContext.download.transcript === "object"){
                     if(typeof $this.chameleonContext.download.transcript.url != "undefined" 
                         && typeof $this.chameleonContext.download.transcript.url === "string" ){
-                        $chameleon.find('.download-wrap').append('<a class="download-btn download-transcript">Download transcript</a>');
+                        $chameleon.find('.download-container').append('<a class="download-btn download-transcript" target="_blank">Download transcript</a>');
                         $chameleon.find('.download-transcript').attr("href", $this.chameleonContext.download.transcript.url);
                     }
 
@@ -210,7 +220,7 @@
 
             //
 
-            _feedChameleon();
+            _registerClickEvents();
         }
 
         function _initJWPlayer(){
@@ -219,15 +229,15 @@
             $this.jwPlayerInst = jwplayer("jwplayer").setup( $this.chameleonContext.jwplayerSetup);
 
             $this.jwPlayerInst.onReady(function() {
-                $chameleon.find('.video-wrap #jwplayer').css("width", "100%").css("height", "100%");
+                $chameleon.find('.video-container #jwplayer').css("width", "100%").css("height", "100%");
 
-                var $videoWrap = $chameleon.find('.video-wrap');
-                var $slideWrap = $chameleon.find('.slide-wrap');
+                var $videoContainer = $chameleon.find('.video-container');
+                var $slideContainer = $chameleon.find('.slide-container');
 
-                if($videoWrap.height() > $slideWrap.height()){
-                    $slideWrap.css("margin-top", ($videoWrap.height()-$slideWrap.height())/2);
+                if($videoContainer.height() > $slideContainer.height()){
+                    $slideContainer.css("margin-top", ($videoContainer.height()-$slideContainer.height())/2);
                 }else{
-                    $videoWrap.css("margin-top", ($slideWrap.height()-$videoWrap.height())/2);
+                    $videoContainer.css("margin-top", ($slideContainer.height()-$videoContainer.height())/2);
                 }
 
             });
@@ -235,24 +245,24 @@
             $this.jwPlayerInst.onTime(function() {
                 var time = $this.jwPlayerInst.getPosition();
                 var duration = $this.jwPlayerInst.getDuration();
-                _showSlideHandler(time, duration);
+                _slideCarouselHandler(time, duration);
             });
 
             $this.jwPlayerInst.onComplete(function() {
-                _setThumbnail(0);
-                _updateSlideOrder(0);
+                _setSlide(0);
+                _updateSlideCarouel(0);
             });
         }
 
-        function _feedChameleon() {
+        function _registerClickEvents() {
             // Move to the target timeslot when the slide preview is clicked
-            $chameleon.find('.preview-image').click(function() {
+            $chameleon.find('.slide-image').click(function() {
                 var id = $(this).attr("data-index");
                 $this.jwPlayerInst.seek(_parseStrTime($this.chameleonContext.slides[id - 1].time));
             });
 
             $chameleon.find('.carousel-control.prev').click(function() {
-                var id = $('.active .chameleon-main .preview-image').attr("data-index");
+                var id = $('.active .current-slide .slide-image').attr("data-index");
                 id = parseInt(id) - 1;
                 if (id == 0) {
                     id = $this.chameleonContext.slides.length;
@@ -262,19 +272,18 @@
             });
 
             $chameleon.find('.carousel-control.next').click(function() {
-                var id = $chameleon.find('.active .chameleon-main .preview-image').attr("data-index");
+                var id = $chameleon.find('.active .current-slide .slide-image').attr("data-index");
                 if (id == $this.chameleonContext.slides.length) {
                     id = 0;
                 }
 
                 $this.jwPlayerInst.seek(_parseStrTime($this.chameleonContext.slides[id].time));
             });
-
         }
 
-        function _updateSlideOrder(index) {
+        function _updateSlideCarouel(index) {
             var index = parseInt(index) + 1;
-            var target = $('.chameleon-main .preview-image[data-index="' + index + '"]').parent().parent();
+            var target = $('.current-slide .slide-image[data-index="' + index + '"]').parent().parent();
             $('.carousel-item.active').removeClass("active");
             target.addClass("active");
         }
@@ -285,28 +294,28 @@
             return (parseInt(hms[0] * 60 * 60) + parseInt(hms[1] * 60) + parseInt(hms[2]));
         }
 
-        function _showSlideHandler(time, duration) {
+        function _slideCarouselHandler(time, duration) {
             if (time >= _parseStrTime($this.chameleonContext.slides[$this.chameleonContext.slides.length - 1].time)) {
                 if ($this.chameleonContext.slides.length > o.numOfCarouselSlide) {
-                    _updateSlideOrder($this.chameleonContext.slides.length - 1);
+                    _updateSlideCarouel($this.chameleonContext.slides.length - 1);
                 }
-                 _setThumbnail($this.chameleonContext.slides.length - 1);
+                 _setSlide($this.chameleonContext.slides.length - 1);
             } else {
                 for (var i = 0, j = 1; i < $this.chameleonContext.slides.length; i++, j++) {
                     if (time >= _parseStrTime($this.chameleonContext.slides[i].time) && time < _parseStrTime($this.chameleonContext.slides[j].time)) {
                         if ($this.chameleonContext.slides.length > o.numOfCarouselSlide) {
-                            _updateSlideOrder(i);
+                            _updateSlideCarouel(i);
                         }
-                         _setThumbnail(i);
+                         _setSlide(i);
                     }
                 }
             }
         }
 
-        function _setThumbnail(index){
-            $chameleon.find('.slide-wrap img').attr('src', $this.chameleonContext.slides[index].img);
-            $chameleon.find('.slide-wrap img').attr('title', $this.chameleonContext.slides[index].title);
-            $chameleon.find('.slide-wrap img').attr('alt', $this.chameleonContext.slides[index].alt);
+        function _setSlide(index){
+            $chameleon.find('.slide-container img').attr('src', $this.chameleonContext.slides[index].img);
+            $chameleon.find('.slide-container img').attr('title', $this.chameleonContext.slides[index].title);
+            $chameleon.find('.slide-container img').attr('alt', $this.chameleonContext.slides[index].alt);
         }
 
         function hook(hookName) {
@@ -352,6 +361,6 @@
         width: '1024px',            // width of chameleon container
         height: '300px',            // height of chameleon container
         chameleonContext: {},              // slides JSON file / object 
-        numOfCarouselSlide: 6       // number of slides showing in carousel
+        numOfCarouselSlide: 5      // number of slides showing in carousel
     };
 }));
