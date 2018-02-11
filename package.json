@@ -1,0 +1,27 @@
+{
+  "name": "jquery-chameleon",
+  "version": "1.0.0",
+  "description": "jQuery plugin for sychronizing slides with JWPlayer Video - https://github.com/wingkwong/jquery-chameleon",
+  "main": "chameleon.min",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wingkwong/jquery-chameleon.git"
+  },
+  "keywords": [
+    "jquery-plugin",
+    "ecosystem:jquery",
+    "jquery",
+    "jwplayer",
+    "synchronize",
+    "slides"
+  ],
+  "author": "wingkwong.code@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wingkwong/jquery-chameleon/issues"
+  },
+  "homepage": "https://github.com/wingkwong/jquery-chameleon#readme"
+}
