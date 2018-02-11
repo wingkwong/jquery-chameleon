@@ -1,12 +1,18 @@
+.chameleon{
+	font-family: arial;
+	background-image: linear-gradient(180deg, #92d3c6 60%, #fff),linear-gradient(70deg, #dbedff 32%, #ebfff0);
+}
+
 .video-container{
 	float: left;
 	width: 50%;
+	height: 100%;
 }
 
 
 .slide-container{
-	width: 47%;
-	margin-left: 3%;
+	width: 50%;
+	height: 100%;
 	float: left;
 }
 
@@ -19,15 +25,15 @@
 .download-container{
 	float: left;
     width: 100%;
-    background: #ddd;
+    background: #2c7062;
     text-align: center;
-    margin-top: 20px;
 }
 
 .download-btn{
 	display: inline-block;
- 	margin-right: 10px;
+ 	margin: 5px 10px;
  	cursor: pointer;
+ 	color: #ffffff;
 }
 
 .carousel-container{
@@ -39,22 +45,21 @@
 
 
 .preview-slide-container{
-	background: #e6e6e6;
+	background: #92d3c6;
     padding: 15px 75px 0px 75px;
     position: relative;
     overflow: hidden;
+    color: #000000;
 }
 
 .carousel-control{
 	position: absolute;
-    color: white;
+    color: #2c7062;
     opacity: .9;
     font-size: 35px;
-    font-weight: 100;
-    line-height: 40px;
+    font-weight: bold;
+    line-height: 135px;
     padding: 5px;
-    padding-top: 5%;
-    color: #000;
     width: 40px;
     height: 100%;
     display: block;
@@ -71,6 +76,7 @@
 .carousel-container .carousel-item{
 	text-align: center;
 	display: none;
+	color: #ffffff;
 }
 
 .carousel-container .carousel-item.active{
