@@ -8,7 +8,7 @@
  *  \_____|_|  |_/_/    \_\_|  |_|______|______|______\____/|_| \_|
  *                                                                 
  *                                                                 
- * chameleon.js - Sychronizing slides with JWPlayer Video
+ * chameleon.js - synchronizing slides with JWPlayer Video
  * @author Wing Kam Wong - wingkwong.code@gmail.com
  * @version - 1.0.0
  */
