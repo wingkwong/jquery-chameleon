@@ -1,0 +1,16 @@
+/**
+ * 
+ *   _____ _    _          __  __ ______ _      ______ ____  _   _ 
+ *  / ____| |  | |   /\   |  \/  |  ____| |    |  ____/ __ \| \ | |
+ * | |    | |__| |  /  \  | \  / | |__  | |    | |__ | |  | |  \| |
+ * | |    |  __  | / /\ \ | |\/| |  __| | |    |  __|| |  | | . ` |
+ * | |____| |  | |/ ____ \| |  | | |____| |____| |___| |__| | |\  |
+ *  \_____|_|  |_/_/    \_\_|  |_|______|______|______\____/|_| \_|
+ *                                                                 
+ *                                                                 
+ * chameleon.css 
+ * @author Wing Kam Wong - wingkwong.code@gmail.com
+ * @version - 1.0.0
+ */
+
+.chameleon{font-family:arial;background-image:linear-gradient(180deg,#92d3c6 60%,#fff),linear-gradient(70deg,#dbedff 32%,#ebfff0)}.video-container{float:left;width:50%;height:100%}.slide-container{width:50%;height:100%;float:left}.slide-container img{display:block;max-width:100%;width:100%}.download-container{float:left;width:100%;background:#2c7062;text-align:center}.download-btn{display:inline-block;margin:5px 10px;cursor:pointer;color:#fff}.carousel-container{width:100%;float:left;position:relative;overflow:hidden}.preview-slide-container{background:#92d3c6;padding:15px 75px 0;position:relative;overflow:hidden;color:#000}.carousel-control{position:absolute;color:#2c7062;opacity:.9;font-size:35px;font-weight:700;line-height:135px;padding:5px;width:40px;height:100%;display:block;top:0;text-align:center;cursor:pointer}.carousel-control.next{left:auto;right:0}.carousel-container .carousel-item{text-align:center;display:none;color:#fff}.carousel-container .carousel-item.active{display:block}.carousel-container .slide-image img{width:100px;cursor:pointer;padding:0 10px}.carousel-container .slide-number{padding:10px 0;text-align:center}.carousel-container .thumbnail-container{display:inline-block}
