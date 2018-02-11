@@ -1,6 +1,6 @@
 # Chameleon
 
-synchronizing slides with JWPlayer Video 
+Synchronizing slides with JWPlayer Video 
 
 ### Prerequisites
 
