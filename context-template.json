@@ -1,0 +1,40 @@
+{  
+   "jwplayerKey": "",
+   "jwplayerSetup" : {
+   		"file": ""
+   },
+   "download": {
+   		"slides": {
+   			"url": "",
+   			"title": ""
+   		},
+   		"video": {
+   			"url": "",
+   			"title": ""
+   		},
+   		"transcript": {
+   			"url": "",
+   			"title": ""
+   		}
+   },
+   "slides":[  
+      {  
+         "time":"00:00:00",
+         "img":"",
+         "title": "",
+          "alt": ""
+      },
+      {  
+         "time":"00:00:30",
+         "img":"",
+         "title": "",
+          "alt": ""
+      },
+      {  
+         "time":"00:01:00",
+         "img":"",
+         "title": "",
+          "alt": ""
+      }
+   ]
+}
