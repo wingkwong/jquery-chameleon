@@ -6,21 +6,23 @@
    "download": {
    		"slides": {
    			"url": "url",
-   			"title": "this is title"
+   			"title": "Download Slides (XXX KB)"
    		},
    		"video": {
-   			"url": "url",
-   			"title": "this is video title"
+   			"url": "http://cdn.jwplayer.com/videos/8L4m9FJB-Zq6530MP.mp4",
+   			"title": "Download Video (XXX MB)"
    		},
    		"transcript": {
    			"url": "url",
-   			"title": "this is transcript title"
+   			"title": "Download Transcript (XXX MB)"
    		}
    },
    "slides":[  
       {  
          "time":"00:00:00",
-         "img":"https://dummyimage.com/600x400/000/fff&text=1"
+         "img":"https://dummyimage.com/600x400/000/fff&text=1",
+         "title": "This is a title",
+         "alt": "Dummy alt text"
       },
       {  
          "time":"00:00:02",
