@@ -232,14 +232,15 @@
                 $chameleon.find('.video-container #jwplayer').css("width", "100%").css("height", "100%");
 
                 var $videoContainer = $chameleon.find('.video-container');
-                var $slideContainer = $chameleon.find('.slide-container');
-
-                if($videoContainer.height() > $slideContainer.height()){
-                    $slideContainer.css("margin-top", ($videoContainer.height()-$slideContainer.height())/2);
+                var $slideContainerImg = $chameleon.find('.slide-container img');
+                console.log("$videoContainer.height() =" + $videoContainer.height() );
+                console.log("$slideContainerImg.height() =" + $slideContainerImg.height() );
+                if($videoContainer.height() > $slideContainerImg.height()){
+                    $slideContainerImg.css("padding-top", ($videoContainer.height()-$slideContainerImg.height())/2);
                 }else{
-                    $videoContainer.css("margin-top", ($slideContainer.height()-$videoContainer.height())/2);
+                    $videoContainer.css("height", $slideContainerImg.height());
+                    $videoContainer.css("padding-top", ($slideContainerImg.height()-$videoContainer.height())/2);
                 }
-
             });
 
             $this.jwPlayerInst.onTime(function() {
@@ -318,12 +319,6 @@
             $chameleon.find('.slide-container img').attr('alt', $this.chameleonContext.slides[index].alt);
         }
 
-        function hook(hookName) {
-            if (o[hookName] !== undefined) {
-                o[hookName].call(el);
-            }
-        }
-
         //-----------------CHAMLEON--------------------//
 
         _initChameleon();
@@ -358,7 +353,7 @@
     };
 
     $.fn[chameleon].defaults = {
-        width: '1024px',            // width of chameleon container
+        width: '800px',            // width of chameleon container
         height: '300px',            // height of chameleon container
         chameleonContext: {},              // slides JSON file / object 
         numOfCarouselSlide: 5      // number of slides showing in carousel
