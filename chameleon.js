@@ -98,10 +98,10 @@
 
             _initJWPlayer();
 
-            // Slide Container
+            // Set the first slide as a cover
             _setSlide(0);
 
-            // Slides Carousel
+            // Building Slides Carousel
             $chameleon.find('.carousel-container').append($previewSlideContainer).append($carouselControl);
 
             for (var i = 1; i <= $this.chameleonContext.slides.length; i++) {
@@ -115,6 +115,8 @@
             }
 
             $chameleon.find('.carousel-item:first').addClass("active");
+
+            // Building multiple sets of carousel items
 
             if ($this.chameleonContext.slides.length > o.numOfCarouselSlide) {
                 $chameleon.find('.carousel-item').each(function() {
@@ -156,7 +158,7 @@
                 $chameleon.find('.carousel-item').addClass("active");
             }
 
-            // Download Container
+            // Building Download Container
             if(!$.isEmptyObject($this.chameleonContext.download)){
 
                 if(typeof $this.chameleonContext.download.slides === "undefined" 
@@ -218,8 +220,6 @@
                 }
             }
 
-            //
-
             _registerClickEvents();
         }
 
@@ -233,8 +233,7 @@
 
                 var $videoContainer = $chameleon.find('.video-container');
                 var $slideContainerImg = $chameleon.find('.slide-container img');
-                console.log("$videoContainer.height() =" + $videoContainer.height() );
-                console.log("$slideContainerImg.height() =" + $slideContainerImg.height() );
+                
                 if($videoContainer.height() > $slideContainerImg.height()){
                     $slideContainerImg.css("padding-top", ($videoContainer.height()-$slideContainerImg.height())/2);
                 }else{
@@ -256,7 +255,6 @@
         }
 
         function _registerClickEvents() {
-            // Move to the target timeslot when the slide preview is clicked
             $chameleon.find('.slide-image').click(function() {
                 var id = $(this).attr("data-index");
                 $this.jwPlayerInst.seek(_parseStrTime($this.chameleonContext.slides[id - 1].time));
@@ -353,9 +351,9 @@
     };
 
     $.fn[chameleon].defaults = {
-        width: '800px',            // width of chameleon container
-        height: '300px',            // height of chameleon container
+        width: '968px',                    // width of chameleon container
+        height: '300px',                   // height of chameleon container
         chameleonContext: {},              // slides JSON file / object 
-        numOfCarouselSlide: 5      // number of slides showing in carousel
+        numOfCarouselSlide: 5              // number of slides showing in carousel
     };
 }));
