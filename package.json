@@ -1,6 +1,6 @@
 {
   "name": "jquery-chameleon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "jQuery plugin for synchronizing slides with JWPlayer Video - https://github.com/wingkwong/jquery-chameleon",
   "main": "chameleon.min",
   "scripts": {
