@@ -6,7 +6,7 @@ Synchronizing slides with JWPlayer Video
 
 ### Prerequisites
 
-You should have a valid JW Player license key. The key are required in ChameleonContext.
+You should have a valid JW Player license key. The key is required in ChameleonContext.
 
 ### Installing
 
@@ -41,7 +41,7 @@ JavaScript:
 You can either define the chameleon context with a json file
 ```javascript
 $('.chameleon').chameleon({
-	chameleonContext: 'http://dev.github.org/chameleon/context.json'
+  chameleonContext: 'http://dev.github.org/chameleon/context.json'
 });
 ```
 or a inline JSON object
