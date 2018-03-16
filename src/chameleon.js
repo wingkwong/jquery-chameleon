@@ -40,7 +40,8 @@
             $previewSlideContainer = '<div class="preview-slide-container"></div>',
             $carouselItem = '<div class="carousel-item"></div>',
             $previewImage = '<div class="thumbnail-container"><div class="slide-image"><img/></div><div class="slide-number"></div></div>',
-            $carouselControl = '<a class="carousel-control prev">&lt;</a><a class="carousel-control next">&gt;</a>',
+            $carouselControl = '<a class="carousel-control prev"></a><a class="carousel-control next"></a>',
+            $downloadIcon = '<span class="download-icon"></span>',
             chameleonContext = {},
             jwPlayerInst = {},
             maxImgInARow = 5;
@@ -50,7 +51,7 @@
                 throw new Error("Chameleon chameleonContext hasn't been defined.");
             }
 
-            $chameleon.append($videoContainer).append($slideContainer).append($downloadContainer).append($carouselContainer);
+            $chameleon.append($videoContainer).append($slideContainer).append($carouselContainer).append($downloadContainer);
 
             $chameleon.css("width", o.width).css("height", o.height);
 
@@ -95,7 +96,6 @@
         }
 
         function _buildHabitat() {
-
             _initJWPlayer();
 
             // Set the first slide as a cover
@@ -173,7 +173,7 @@
                   
                     if(typeof $this.chameleonContext.download.slides.url != "undefined" 
                         && typeof $this.chameleonContext.download.slides.url === "string" ){
-                        $chameleon.find('.download-container').append('<a class="download-btn download-slides" target="_blank">Download slides</a>');
+                        $chameleon.find('.download-container').append('<a class="download-btn download-slides" target="_blank" download>Download slides</a>');
                         $chameleon.find('.download-slides').attr("href", $this.chameleonContext.download.slides.url);
                     }
 
@@ -181,6 +181,7 @@
                         && typeof $this.chameleonContext.download.slides.title != "undefined" 
                         && typeof $this.chameleonContext.download.slides.title === "string" ){
                         $chameleon.find('.download-slides').html($this.chameleonContext.download.slides.title);
+                        $chameleon.find('.download-slides').prepend($downloadIcon);
                         $chameleon.find('.download-slides').attr("title", $this.chameleonContext.download.slides.title);
                     }
 
@@ -191,7 +192,7 @@
                     && typeof $this.chameleonContext.download.video === "object"){
                     if(typeof $this.chameleonContext.download.video.url != "undefined" 
                         && typeof $this.chameleonContext.download.video.url === "string" ){
-                        $chameleon.find('.download-container').append('<a class="download-btn download-video" target="_blank">Download video</a>');
+                        $chameleon.find('.download-container').append('<a class="download-btn download-video" target="_blank" download>Download video</a>');
                         $chameleon.find('.download-video').attr("href", $this.chameleonContext.download.video.url);
                     }
 
@@ -199,6 +200,7 @@
                         && typeof $this.chameleonContext.download.video.title != "undefined" 
                         && typeof $this.chameleonContext.download.video.title === "string" ){
                         $chameleon.find('.download-video').html($this.chameleonContext.download.video.title);
+                        $chameleon.find('.download-video').prepend($downloadIcon);
                         $chameleon.find('.download-video').attr("title", $this.chameleonContext.download.video.title);
                     }
                 }
@@ -207,7 +209,7 @@
                     && typeof $this.chameleonContext.download.transcript === "object"){
                     if(typeof $this.chameleonContext.download.transcript.url != "undefined" 
                         && typeof $this.chameleonContext.download.transcript.url === "string" ){
-                        $chameleon.find('.download-container').append('<a class="download-btn download-transcript" target="_blank">Download transcript</a>');
+                        $chameleon.find('.download-container').append('<a class="download-btn download-transcript" target="_blank" download>Download transcript</a>');
                         $chameleon.find('.download-transcript').attr("href", $this.chameleonContext.download.transcript.url);
                     }
 
@@ -215,6 +217,7 @@
                         && typeof $this.chameleonContext.download.transcript.title != "undefined" 
                         && typeof $this.chameleonContext.download.transcript.title === "string" ){
                         $chameleon.find('.download-transcript').html($this.chameleonContext.download.transcript.title);
+                        $chameleon.find('.download-transcript').prepend($downloadIcon);
                         $chameleon.find('.download-transcript').attr("title", $this.chameleonContext.download.transcript.title);
                     }
                 }
@@ -229,8 +232,6 @@
             $this.jwPlayerInst = jwplayer("jwplayer").setup( $this.chameleonContext.jwplayerSetup);
 
             $this.jwPlayerInst.onReady(function() {
-                $chameleon.find('.video-container #jwplayer').css("width", "100%").css("height", "100%");
-
                 var $videoContainer = $chameleon.find('.video-container');
                 var $slideContainerImg = $chameleon.find('.slide-container img');
                 
