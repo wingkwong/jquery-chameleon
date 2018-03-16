@@ -1,12 +1,10 @@
 # Chameleon
 
-Synchronizing slides with JWPlayer Video 
-
-![alt text](https://raw.githubusercontent.com/wingkwong/jquery-chameleon/master/screenshot.png)
+Synchronizing slides with JWPlayer 7 Video 
 
 ### Prerequisites
 
-You should have a valid JW Player license key. The key is required in ChameleonContext.
+You should have a valid JW Player license key and JW Player library The key is required in ChameleonContext.
 
 ### Installing
 
@@ -23,12 +21,12 @@ You should have a valid JW Player license key. The key is required in ChameleonC
 
 #### ChameleonContext
 
-|                       | Description           | Optional  |
-| ----------------------|-------------| -----|
-| jwplayerKey                 | The license key of JW Player. | N |
-| jwplayerSetup                | JW Player setup object     |   N |
-| download      | Definition of the url and the title for slides, video and transcript  |    Y |
-| slides      | An array storing multiple objects defining slides info such as time, image path, title and alt text  |    N |
+|                       | Description | Optional  |
+| ----------------------|-------------| -----------------|
+| jwplayerKey           | The license key of JW Player. | N |
+| jwplayerSetup         | JW Player setup object     |   N |
+| download      		| Definition of the url and the title for slides, video and transcript  |    Y |
+| slides      			| An array storing multiple objects defining slides info such as time, image path, title and alt text  |    N |
 
 ## Usages
 
@@ -41,7 +39,7 @@ JavaScript:
 You can either define the chameleon context with a json file
 ```javascript
 $('.chameleon').chameleon({
-  chameleonContext: 'http://dev.github.org/chameleon/context.json'
+  chameleonContext: 'context.json'
 });
 ```
 or a inline JSON object
