@@ -144,3 +144,13 @@
 .carousel-container .thumbnail-container{
 	display: inline-block;
 }
+
+.info-panel{
+	width: 100%;
+	background: red;
+	float: left;
+}
+
+.info-panel .dropdown-content{
+	display: :none;
+}

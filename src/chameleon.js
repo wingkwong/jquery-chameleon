@@ -35,8 +35,9 @@
             $this = $(this),
             $videoContainer = '<div class="video-container"><div id="jwplayer"></div></div>',
             $slideContainer = '<div class="slide-container"><img/></div>',
-            $downloadContainer = '<div class="download-container"></div>',
+            $infoPanelContainer = '<div class="info-panel"></div>',
             $carouselContainer = '<div class="carousel-container"></div>',
+            $downloadContainer = '<div class="download-container"></div>',
             $previewSlideContainer = '<div class="preview-slide-container"></div>',
             $carouselItem = '<div class="carousel-item"></div>',
             $previewImage = '<div class="thumbnail-container"><div class="slide-image"><img/></div><div class="slide-number"></div></div>',
@@ -46,12 +47,19 @@
             jwPlayerInst = {},
             maxImgInARow = 5;
 
+        var infoPanel = {
+            'base': '<div class="dropdown-box"></div>',
+            'header': '<div class="dropdown-header"></div>',
+            'button': '<span class="dropdown-btn down">Buttons</span>',
+            'content': '<div class="dropdown-content">Dummy Content</div>'
+        };
+
         function _initChameleon() {
             if ($.isEmptyObject(o.chameleonContext)){
                 throw new Error("Chameleon chameleonContext hasn't been defined.");
             }
 
-            $chameleon.append($videoContainer).append($slideContainer).append($carouselContainer).append($downloadContainer);
+            $chameleon.append($videoContainer).append($slideContainer).append($infoPanelContainer).append($carouselContainer).append($downloadContainer);
 
             $chameleon.css("width", o.width).css("height", o.height);
 
@@ -224,6 +232,15 @@
                 }
             }
 
+            // Building Info Panel
+           $infoPanelContainer =  $chameleon.find('.info-panel');
+           $header = $(infoPanel.header).append(infoPanel.button);
+           $ip = $(infoPanel.base).append($header).append(infoPanel.content);
+           $infoPanelContainer.append($ip);
+
+
+
+            // Register Click Events
             _registerClickEvents();
         }
 
@@ -283,6 +300,18 @@
                 }
 
                 $this.jwPlayerInst.seek(_parseStrTime($this.chameleonContext.slides[id].time));
+            });
+
+            $chameleon.find('.info-panel .dropdown-btn').click(function(){
+                var me = $(this);
+                console.log("here")
+                if(me.hasClass("down")){
+                    me.parent().parent().find(".dropdown-content").slideDown();
+                    me.removeClass("down").addClass("up");
+                }else{
+                    me.parent().parent().find(".dropdown-content").slideUp();
+                    me.removeClass("up").addClass("down");
+                }
             });
         }
 
