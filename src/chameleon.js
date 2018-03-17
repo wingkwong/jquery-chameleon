@@ -96,6 +96,7 @@
         }
 
         function _buildHabitat() {
+
             _initJWPlayer();
 
             // Set the first slide as a cover
@@ -235,11 +236,13 @@
                 var $videoContainer = $chameleon.find('.video-container');
                 var $slideContainerImg = $chameleon.find('.slide-container img');
                 
-                if($videoContainer.height() > $slideContainerImg.height()){
+                if($slideContainerImg.height() != 0){
+                    if($videoContainer.height() > $slideContainerImg.height()){
                     $slideContainerImg.css("padding-top", ($videoContainer.height()-$slideContainerImg.height())/2);
-                }else{
-                    $videoContainer.css("height", $slideContainerImg.height());
-                    $videoContainer.css("padding-top", ($slideContainerImg.height()-$videoContainer.height())/2);
+                    }else{
+                        $videoContainer.css("height", $slideContainerImg.height());
+                        $videoContainer.css("padding-top", ($slideContainerImg.height()-$videoContainer.height())/2);
+                    }
                 }
             });
 
