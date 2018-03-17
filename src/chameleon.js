@@ -235,7 +235,7 @@
             $this.jwPlayerInst.onReady(function() {
                 var $videoContainer = $chameleon.find('.video-container');
                 var $slideContainerImg = $chameleon.find('.slide-container img');
-                
+                console.log($slideContainerImg.height())
                 if($slideContainerImg.height() != 0){
                     if($videoContainer.height() > $slideContainerImg.height()){
                     $slideContainerImg.css("padding-top", ($videoContainer.height()-$slideContainerImg.height())/2);
@@ -243,6 +243,8 @@
                         $videoContainer.css("height", $slideContainerImg.height());
                         $videoContainer.css("padding-top", ($slideContainerImg.height()-$videoContainer.height())/2);
                     }
+                }else{
+                    $slideContainerImg.css("max-height", "100%");
                 }
             });
 
