@@ -253,7 +253,7 @@
                                 .append(infoPanelSlide.slideNumber)
                                 .append(infoPanelSlide.slideTime)
                                 .append(infoPanelSlide.slideTitle);
-                $infoPanelSlide.attr("data-index", (i+1));
+                $infoPanelSlide.attr("data-index", i);
                 $infoPanelSlide.find('.slide-number').html("#" + (i+1));
                 $infoPanelSlide.find('.slide-time').html($this.chameleonContext.slides[i].time); 
                 if(typeof $this.chameleonContext.slides[i].title === "undefined" || $this.chameleonContext.slides[i].title == ''){
