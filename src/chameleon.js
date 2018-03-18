@@ -48,9 +48,9 @@
             maxImgInARow = 5;
 
         var infoPanel = {
-            'base': '<div class="info-panel dropdown-box"></div>',
+            'base': '<div class="dropdown-box"></div>',
             'header': '<div class="dropdown-header"></div>',
-            'button': '<span class="dropdown-btn down">Slide Info</span>',
+            'button': '<span class="dropdown-btn down">Markers Info</span>',
             'content': '<div class="dropdown-content"></div>'
         };
 
