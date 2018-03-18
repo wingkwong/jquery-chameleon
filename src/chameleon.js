@@ -48,10 +48,17 @@
             maxImgInARow = 5;
 
         var infoPanel = {
-            'base': '<div class="dropdown-box"></div>',
+            'base': '<div class="info-panel dropdown-box"></div>',
             'header': '<div class="dropdown-header"></div>',
-            'button': '<span class="dropdown-btn down">Buttons</span>',
-            'content': '<div class="dropdown-content">Dummy Content</div>'
+            'button': '<span class="dropdown-btn down">Slide Info</span>',
+            'content': '<div class="dropdown-content"></div>'
+        };
+
+        var infoPanelSlide = {
+            'base': '<a href="javascript:;" class="info-panel-slide"></a>',
+            'slideNumber': '<div class="slide-number"></div>',
+            'slideTitle': '<div class="slide-title-wrapper"><div class="slide-title"></div></div>',
+            'slideTime': '<div class="slide-time"></div>',
         };
 
         function _initChameleon() {
@@ -233,10 +240,29 @@
             }
 
             // Building Info Panel
-           $infoPanelContainer =  $chameleon.find('.info-panel');
-           $header = $(infoPanel.header).append(infoPanel.button);
-           $ip = $(infoPanel.base).append($header).append(infoPanel.content);
-           $infoPanelContainer.append($ip);
+            $infoPanelContainer =  $chameleon.find('.info-panel');
+            $infoPanel = $(infoPanel.base);
+            $header = $(infoPanel.header).append(infoPanel.button);
+            $content = $(infoPanel.content);
+            $ip = $infoPanel.append($header).append($content);
+            $infoPanelContainer.append($ip);
+
+            // Building Info Panel - slide
+            for (var i = 0; i < $this.chameleonContext.slides.length; i++) {
+                $infoPanelSlide = $(infoPanelSlide.base)
+                                .append(infoPanelSlide.slideNumber)
+                                .append(infoPanelSlide.slideTime)
+                                .append(infoPanelSlide.slideTitle);
+                $infoPanelSlide.attr("data-index", (i+1));
+                $infoPanelSlide.find('.slide-number').html("#" + (i+1));
+                $infoPanelSlide.find('.slide-time').html($this.chameleonContext.slides[i].time); 
+                if(typeof $this.chameleonContext.slides[i].title === "undefined" || $this.chameleonContext.slides[i].title == ''){
+                    $infoPanelSlide.find('.slide-title').html("-");    
+                }else{
+                    $infoPanelSlide.find('.slide-title').html($this.chameleonContext.slides[i].title);          
+                }    
+                $chameleon.find('.dropdown-content').append($infoPanelSlide);
+            }
 
 
 
@@ -252,7 +278,6 @@
             $this.jwPlayerInst.onReady(function() {
                 var $videoContainer = $chameleon.find('.video-container');
                 var $slideContainerImg = $chameleon.find('.slide-container img');
-                console.log($slideContainerImg.height())
                 if($slideContainerImg.height() != 0){
                     if($videoContainer.height() > $slideContainerImg.height()){
                     $slideContainerImg.css("padding-top", ($videoContainer.height()-$slideContainerImg.height())/2);
@@ -304,7 +329,6 @@
 
             $chameleon.find('.info-panel .dropdown-btn').click(function(){
                 var me = $(this);
-                console.log("here")
                 if(me.hasClass("down")){
                     me.parent().parent().find(".dropdown-content").slideDown();
                     me.removeClass("down").addClass("up");
@@ -312,6 +336,12 @@
                     me.parent().parent().find(".dropdown-content").slideUp();
                     me.removeClass("up").addClass("down");
                 }
+            });
+
+            $chameleon.find('.info-panel-slide').click(function(){
+                var me = $(this);
+                var id = me.attr("data-index");
+                $this.jwPlayerInst.seek(_parseStrTime($this.chameleonContext.slides[id].time));
             });
         }
 
