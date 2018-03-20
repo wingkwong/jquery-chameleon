@@ -50,7 +50,7 @@
         var infoPanel = {
             'base': '<div class="dropdown-box"></div>',
             'header': '<div class="dropdown-header"></div>',
-            'button': '<span class="dropdown-btn down">Markers Info</span>',
+            'button': '<span class="dropdown-btn down">Markers</span>',
             'content': '<div class="dropdown-content"></div>'
         };
 
@@ -68,7 +68,8 @@
 
             $chameleon.append($videoContainer).append($slideContainer).append($infoPanelContainer).append($carouselContainer).append($downloadContainer);
 
-            $chameleon.css("width", o.width).css("height", o.height);
+            if(!o.responsive)
+                $chameleon.css("width", o.width).css("height", o.height);
 
             if (typeof o.chameleonContext === "object") {
                 $this.chameleonContext = o.chameleonContext;
@@ -268,6 +269,10 @@
 
             // Register Click Events
             _registerClickEvents();
+
+            
+            __responsify();
+
         }
 
         function _initJWPlayer(){
@@ -278,16 +283,16 @@
             $this.jwPlayerInst.onReady(function() {
                 var $videoContainer = $chameleon.find('.video-container');
                 var $slideContainerImg = $chameleon.find('.slide-container img');
-                if($slideContainerImg.height() != 0){
-                    if($videoContainer.height() > $slideContainerImg.height()){
-                    $slideContainerImg.css("padding-top", ($videoContainer.height()-$slideContainerImg.height())/2);
-                    }else{
-                        $videoContainer.css("height", $slideContainerImg.height());
-                        $videoContainer.css("padding-top", ($slideContainerImg.height()-$videoContainer.height())/2);
-                    }
-                }else{
-                    $slideContainerImg.css("max-height", "100%");
-                }
+                // if($slideContainerImg.height() != 0){
+                //     if($videoContainer.height() > $slideContainerImg.height()){
+                //     $slideContainerImg.css("padding-top", ($videoContainer.height()-$slideContainerImg.height())/2);
+                //     }else{
+                //         $videoContainer.css("height", $slideContainerImg.height());
+                //         $videoContainer.css("padding-top", ($slideContainerImg.height()-$videoContainer.height())/2);
+                //     }
+                // }else{
+                //     $slideContainerImg.css("max-height", "100%");
+                // }
             });
 
             $this.jwPlayerInst.onTime(function() {
@@ -343,6 +348,83 @@
                 var id = me.attr("data-index");
                 $this.jwPlayerInst.seek(_parseStrTime($this.chameleonContext.slides[id].time));
             });
+        }
+
+        function __responsify(){
+            if(o.responsive){
+                $chameleon.find('.video-container').addClass("col-md-6 col-xs-12");
+                $chameleon.find('.video-container').css({
+                    'padding': '0px',
+                    'height': '400px'
+                });
+                $chameleon.find('.slide-container').addClass("col-md-6 col-xs-12");
+                $chameleon.find('.slide-container').css({
+                    'max-height': '400px'
+                });
+                $chameleon.find('.slide-container img').css({
+                    'margin-left': 'auto',
+                    'margin-right': 'auto',
+                    'height': '400px',
+                    'padding': '0px'
+                });
+
+                $chameleon.find('.info-panel').addClass("col-xs-12");
+                $chameleon.find('.carousel-container').addClass("col-xs-12 hidden-xs");
+                $chameleon.find('.download-container').addClass("col-xs-12");
+                $chameleon.find('.download-btn').addClass("col-xs-12 col-sm-4");
+
+                 $chameleon.find('.download-btn').css({
+                    'margin': '10px 0px'
+                 });
+
+                $chameleon.find('.info-panel-slide .slide-number').addClass("col-xs-12 col-sm-2");
+                $chameleon.find('.info-panel-slide .slide-time').addClass("col-xs-12 col-sm-2");
+                $chameleon.find('.info-panel-slide .slide-title-wrapper').addClass("col-xs-12 col-sm-8");
+
+
+            }else{
+                $chameleon.find('.video-container').css({
+                    'float': 'left',
+                    'width': '50%',
+                    'height': '100%'
+                });
+
+                 $chameleon.find('.slide-container').css({
+                    'width': '50%',
+                    'height': '100%',
+                    'float': 'left'
+                });
+
+                 $chameleon.find('.download-container').css({
+                    'width': '100%',
+                    'height': '40px',
+                    'float': 'left',
+                    'line-height': '40px'
+                });
+
+                 $chameleon.find('.download-btn').css({
+                    'width': '30%'
+                })
+
+                $chameleon.find('.info-panel .slide-number, .info-panel .slide-time').css({
+                    'width': '8.33333333%',
+                    'float': 'left',
+                    'text-align': 'center'
+                });
+
+                $chameleon.find('.info-panel .slide-title-wrapper').css({
+                    'width': '83.33333333%',
+                    'float': 'left',
+                    'text-align': 'center'
+                });
+
+                $chameleon.find('.info-panel .slide-title').css({
+                    'padding-left': '30px'
+                });
+
+                  
+
+            }
         }
 
         function _updateSlideCarouel(index) {
@@ -419,6 +501,7 @@
         width: '968px',                    // width of chameleon container
         height: '300px',                   // height of chameleon container
         chameleonContext: {},              // slides JSON file / object 
-        numOfCarouselSlide: 5              // number of slides showing in carousel
+        numOfCarouselSlide: 5,              // number of slides showing in carousel
+        responsive: false
     };
 }));
