@@ -315,7 +315,8 @@
                     break;
 
                 case 'html5':
-                    $chameleon.find('.video-container').append($(html5.base).append(html5.source));
+                    $chameleon.find('.video-container').append(html5.base);
+                    _initHTML5Player();
                     break;
 
                 default: 
@@ -356,7 +357,26 @@
         }
 
         function _initHTML5Player(){
+            var o = $this.chameleonContext.html5Setup;
+            var $video = $chameleon.find('.chameleon-html5-video');
 
+            if(typeof o.sources === "object"){
+                $html5Source = $(html5.source);
+                $html5Source.attr({
+                    "src": o.sources.file,
+                    "type": o.sources.type
+                });
+                $video.append($html5Source);
+            }else if(typeof o.sources === "array"){
+                for(var i=0; i<o.sources.length; i++){
+                    $html5Source = $(html5.source);
+                    $html5Source.attr({
+                        "src": o.sources[i].file,
+                        "type": o.sources[i].type
+                    });
+                    $video.append($html5Source);
+                }
+            }
         }
 
         function _registerClickEvents() {
