@@ -346,8 +346,7 @@
 
             $this.jwPlayerInst.onTime(function() {
                 var time = $this.jwPlayerInst.getPosition();
-                var duration = $this.jwPlayerInst.getDuration();
-                _slideCarouselHandler(time, duration);
+                _slideCarouselHandler(time);
             });
 
             $this.jwPlayerInst.onComplete(function() {
@@ -381,12 +380,22 @@
             if(o.poster != null && o.poster != ''){
                  $video.attr("poster", o.poster);
             }
+
+            $video.bind('timeupdate', function() {
+                var time = $(this).get(0).currentTime;
+                _slideCarouselHandler(time);
+            });
+
+            $video.bind('ended', function() {
+                _setSlide(0);
+                _updateSlideCarouel(0);
+            });
         }
 
         function _registerClickEvents() {
             $chameleon.find('.slide-image').click(function() {
                 var id = $(this).attr("data-index");
-                $this.jwPlayerInst.seek(_parseStrTime($this.chameleonContext.slides[id - 1].time));
+                _seek(_parseStrTime($this.chameleonContext.slides[id - 1].time));
             });
 
             $chameleon.find('.carousel-control.prev').click(function() {
@@ -395,8 +404,7 @@
                 if (id == 0) {
                     id = $this.chameleonContext.slides.length;
                 }
-
-                $this.jwPlayerInst.seek(_parseStrTime($this.chameleonContext.slides[id - 1].time));
+                _seek(_parseStrTime($this.chameleonContext.slides[id - 1].time));
             });
 
             $chameleon.find('.carousel-control.next').click(function() {
@@ -404,8 +412,13 @@
                 if (id == $this.chameleonContext.slides.length) {
                     id = 0;
                 }
+                _seek(_parseStrTime($this.chameleonContext.slides[id].time));
+            });
 
-                $this.jwPlayerInst.seek(_parseStrTime($this.chameleonContext.slides[id].time));
+            $chameleon.find('.info-panel-slide').click(function(){
+                var me = $(this);
+                var id = me.attr("data-index");
+                _seek(_parseStrTime($this.chameleonContext.slides[id].time));
             });
 
             $chameleon.find('.info-panel .dropdown-btn-wrapper').click(function(){
@@ -418,12 +431,23 @@
                     me.removeClass("up").addClass("down");
                 }
             });
+        }
 
-            $chameleon.find('.info-panel-slide').click(function(){
-                var me = $(this);
-                var id = me.attr("data-index");
-                $this.jwPlayerInst.seek(_parseStrTime($this.chameleonContext.slides[id].time));
-            });
+        function _seek(time){
+            switch(o.player){
+                case 'jwplayer':
+                    $this.jwPlayerInst.seek(time)
+                    break;
+
+                case 'html5':
+                    var $video = $chameleon.find('.chameleon-html5-video').get(0);
+                    $video.currentTime = time;
+                    break;
+
+                default: 
+                    throw new Error(o.player + " is not supported");
+
+            }
         }
 
         function __responsify(){
@@ -515,7 +539,7 @@
             return (parseInt(hms[0] * 60 * 60) + parseInt(hms[1] * 60) + parseInt(hms[2]));
         }
 
-        function _slideCarouselHandler(time, duration) {
+        function _slideCarouselHandler(time) {
             if (time >= _parseStrTime($this.chameleonContext.slides[$this.chameleonContext.slides.length - 1].time)) {
                 if ($this.chameleonContext.slides.length > o.numOfCarouselSlide) {
                     _updateSlideCarouel($this.chameleonContext.slides.length - 1);
