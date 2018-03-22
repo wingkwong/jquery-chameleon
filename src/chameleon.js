@@ -57,7 +57,7 @@
         };
 
         var youtube = {
-            'base': '<iframe class="chameleon-youtube-video" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>'
+            'base': '<div id="chameleon-youtube-video" class="chameleon-youtube-video" width="100%" height="100%" frameborder="0" allowfullscreen></div>'
         };
 
 
@@ -402,11 +402,29 @@
         }
 
         function _initYoutubePlayer(){
-            var o = $this.chameleonContext.youtubeSetup;
+
             var $video = $chameleon.find('.chameleon-youtube-video');
-            var src = "https://www.youtube.com/embed/" + o.videoId;
-            $video.attr("src", src);
+            var o = $this.chameleonContext.youtubeSetup;
+
+            //FIXME: YT is not a constructor
+            $this.ytPlayer = new YT.Player('chameleon-youtube-video', {
+              height: '100%',
+              width: '100%',
+              videoId: o.videoId,
+              events: {
+                'onReady': function(){
+                    _bindYTonTimeChange();
+                }
+              }
+          });
         }
+
+        function _bindYTonTimeChange(){
+            setInterval(function(){
+                _slideCarouselHandler($this.ytPlayer.getCurrentTime());
+            }, 1000);
+        }
+
 
         function _registerClickEvents() {
             $chameleon.find('.slide-image').click(function() {
@@ -459,6 +477,10 @@
                     var $video = $chameleon.find('.chameleon-html5-video').get(0);
                     $video.currentTime = time;
                     $video.play();
+                    break;
+
+                case 'youtube':
+                    $this.ytPlayer.seekTo(time);
                     break;
 
                 default: 
