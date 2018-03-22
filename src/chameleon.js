@@ -50,7 +50,7 @@
         var infoPanel = {
             'base': '<div class="dropdown-box"></div>',
             'header': '<div class="dropdown-header"></div>',
-            'button': '<span class="dropdown-btn down">Markers</span>',
+            'button': '<div class="dropdown-btn-wrapper">Markers <span class="dropdown-btn down"></span></div>',
             'content': '<div class="dropdown-content"></div>'
         };
 
@@ -92,10 +92,6 @@
         }
 
         function _initContextValidator(){
-            if(typeof $this.chameleonContext.jwplayerKey === "undefined"){
-                throw new Error("jwplayer key hasn't been defined in chameleonContext.");
-            }
-
             if(typeof $this.chameleonContext.jwplayerSetup === "undefined"){
                 throw new Error("jwplayer setup object hasn't been defined in chameleonContext.");
             }
@@ -276,7 +272,6 @@
         }
 
         function _initJWPlayer(){
-            jwplayer.key = $this.chameleonContext.jwplayerKey;
 
             $this.jwPlayerInst = jwplayer("jwplayer").setup( $this.chameleonContext.jwplayerSetup);
 
@@ -332,13 +327,13 @@
                 $this.jwPlayerInst.seek(_parseStrTime($this.chameleonContext.slides[id].time));
             });
 
-            $chameleon.find('.info-panel .dropdown-btn').click(function(){
-                var me = $(this);
+            $chameleon.find('.info-panel .dropdown-btn-wrapper').click(function(){
+                var me = $(this).find('.dropdown-btn');
                 if(me.hasClass("down")){
-                    me.parent().parent().find(".dropdown-content").slideDown();
+                    me.parent().parent().parent().find(".dropdown-content").slideDown();
                     me.removeClass("down").addClass("up");
                 }else{
-                    me.parent().parent().find(".dropdown-content").slideUp();
+                    me.parent().parent().parent().find(".dropdown-content").slideUp();
                     me.removeClass("up").addClass("down");
                 }
             });
@@ -355,16 +350,15 @@
                 $chameleon.find('.video-container').addClass("col-md-6 col-xs-12");
                 $chameleon.find('.video-container').css({
                     'padding': '0px',
-                    'height': '400px'
+                    'height': '300px'
                 });
                 $chameleon.find('.slide-container').addClass("col-md-6 col-xs-12");
-                $chameleon.find('.slide-container').css({
-                    'max-height': '400px'
-                });
+                // $chameleon.find('.slide-container').css({
+                //     'max-height': '400px'
+                // });
                 $chameleon.find('.slide-container img').css({
                     'margin-left': 'auto',
                     'margin-right': 'auto',
-                    'height': '400px',
                     'padding': '0px'
                 });
 
