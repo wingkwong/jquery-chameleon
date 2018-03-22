@@ -33,7 +33,7 @@
 
         var $chameleon = $('.chameleon'),
             $this = $(this),
-            $videoContainer = '<div class="video-container"><div id="jwplayer"></div></div>',
+            $videoContainer = '<div class="video-container"></div>',
             $slideContainer = '<div class="slide-container"><img/></div>',
             $infoPanelContainer = '<div class="info-panel"></div>',
             $carouselContainer = '<div class="carousel-container"></div>',
@@ -46,6 +46,16 @@
             chameleonContext = {},
             jwPlayerInst = {},
             maxImgInARow = 5;
+
+        var jw = {
+            'base': '<div id="jwplayer"></div>'
+        };
+
+        var html5 = {
+            'base': '<video id="chameleon-html5-video" class="chameleon-html5-video" controls preload="auto" width="100%" height="100%"/>',
+            'source': '<source/>'
+        };
+
 
         var infoPanel = {
             'base': '<div class="dropdown-box"></div>',
@@ -66,7 +76,30 @@
                 throw new Error("Chameleon chameleonContext hasn't been defined.");
             }
 
-            $chameleon.append($videoContainer).append($slideContainer).append($infoPanelContainer).append($carouselContainer).append($downloadContainer);
+             /*
+                Video Container
+            */
+            $chameleon.append($videoContainer);
+
+            /*
+                Slide Container
+            */
+            $chameleon.append($slideContainer);
+
+            /*
+                Info Panel Container
+            */
+            $chameleon.append($infoPanelContainer);
+
+            /*
+                Carousel Container
+            */
+            $chameleon.append($carouselContainer);
+
+            /*
+                Download Container
+            */
+            $chameleon.append($downloadContainer);
 
             if(!o.responsive)
                 $chameleon.css("width", o.width).css("height", o.height);
@@ -109,7 +142,7 @@
 
         function _buildHabitat() {
 
-            _initJWPlayer();
+            _initPlayer();
 
             // Set the first slide as a cover
             _setSlide(0);
@@ -271,6 +304,26 @@
 
         }
 
+        function _initPlayer(){
+            /*
+                Create container for a specific player
+            */
+            switch(o.player){
+                case 'jwplayer':
+                    $chameleon.find('.video-container').append(jw.base);
+                    _initJWPlayer();
+                    break;
+
+                case 'html5':
+                    $chameleon.find('.video-container').append($(html5.base).append(html5.source));
+                    break;
+
+                default: 
+                    throw new Error(o.player + " is not supported");
+
+            }
+        }
+
         function _initJWPlayer(){
 
             $this.jwPlayerInst = jwplayer("jwplayer").setup( $this.chameleonContext.jwplayerSetup);
@@ -300,6 +353,10 @@
                 _setSlide(0);
                 _updateSlideCarouel(0);
             });
+        }
+
+        function _initHTML5Player(){
+
         }
 
         function _registerClickEvents() {
@@ -496,6 +553,7 @@
         height: '300px',                   // height of chameleon container
         chameleonContext: {},              // slides JSON file / object 
         numOfCarouselSlide: 5,              // number of slides showing in carousel
-        responsive: false
+        responsive: false,
+        player: 'html5'
     };
 }));
