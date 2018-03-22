@@ -223,3 +223,10 @@
 .info-panel .slide-time{
 	text-align: left;
 }
+
+.info-panel-slide.chameleon-hightlighted,
+.info-panel-slide.chameleon-hightlighted .slide-title{
+	color: #FFFF33;
+	font-weight: bold;
+}
+
