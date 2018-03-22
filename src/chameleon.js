@@ -442,11 +442,11 @@
                 case 'html5':
                     var $video = $chameleon.find('.chameleon-html5-video').get(0);
                     $video.currentTime = time;
+                    $video.play();
                     break;
 
                 default: 
                     throw new Error(o.player + " is not supported");
-
             }
         }
 
