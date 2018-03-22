@@ -48,12 +48,16 @@
             maxImgInARow = 5;
 
         var jw = {
-            'base': '<div id="jwplayer"></div>'
+            'base': '<div id="jwplayer" class="chameleon-jwplayer-video"></div>'
         };
 
         var html5 = {
             'base': '<video id="chameleon-html5-video" class="chameleon-html5-video" controls preload="auto" width="100%" height="100%"/>',
             'source': '<source/>'
+        };
+
+        var youtube = {
+            'base': '<iframe class="chameleon-youtube-video" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>'
         };
 
 
@@ -319,6 +323,11 @@
                     _initHTML5Player();
                     break;
 
+                case 'youtube':
+                    $chameleon.find('.video-container').append(youtube.base);
+                    _initYoutubePlayer();
+                    break;
+
                 default: 
                     throw new Error(o.player + " is not supported");
 
@@ -390,6 +399,13 @@
                 _setSlide(0);
                 _updateSlideCarouel(0);
             });
+        }
+
+        function _initYoutubePlayer(){
+            var o = $this.chameleonContext.youtubeSetup;
+            var $video = $chameleon.find('.chameleon-youtube-video');
+            var src = "https://www.youtube.com/embed/" + o.videoId;
+            $video.attr("src", src);
         }
 
         function _registerClickEvents() {
