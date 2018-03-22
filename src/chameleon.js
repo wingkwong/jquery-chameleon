@@ -377,6 +377,10 @@
                     $video.append($html5Source);
                 }
             }
+
+            if(o.poster != null && o.poster != ''){
+                 $video.attr("poster", o.poster);
+            }
         }
 
         function _registerClickEvents() {
