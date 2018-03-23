@@ -73,21 +73,21 @@ Or it can be an array with multiple objects
 ```javascript
 {
 	"html5Setup" :{
-      "sources": [
-         {
-            "file": "https://goo.gl/oAaZNs",
-            "type": "video/mp4"
-         },
-         {
-            "file": "https://goo.gl/oAaZNs",
-            "type": "video/mp4"
-         },
-         {
-            "file": "https://goo.gl/oAaZNs",
-            "type": "video/mp4"
-         },
-      ]
-   }
+		"sources": [
+			{
+				"file": "https://goo.gl/oAaZNs",
+				"type": "video/mp4"
+			},
+			{
+				"file": "https://goo.gl/oAaZNs",
+				"type": "video/mp4"
+			},
+			{
+				"file": "https://goo.gl/oAaZNs",
+				"type": "video/mp4"
+			}
+		]
+	}
 }
 ```
 
@@ -101,8 +101,8 @@ Or it can be an array with multiple objects
 ```javascript
 {
 	"youtubeSetup": {
-      "videoId": "FlsCjmMhFmw"
-   }
+		"videoId": "FlsCjmMhFmw"
+	}
 }
 ```
 
@@ -119,19 +119,19 @@ Or it can be an array with multiple objects
 ```javascript
 {
 	"download": {
-   		"slides": {
-   			"url": "https://dummy.gk/wIngKwoNg",
-   			"title": "Download Slides"
-   		},
-   		"video": {
-   			"url": "https://goo.gl/oAaZNs",
-   			"title": "Download Video"
-   		},
-   		"transcript": {
-   			"url": "https://goo.gl/swiAnf",
-   			"title": "Download Transcript"
-   		}
-   }
+		"slides": {
+			"url": "https://dummy.gk/wIngKwoNg",
+			"title": "Download Slides"
+		},
+		"video": {
+			"url": "https://goo.gl/oAaZNs",
+			"title": "Download Video"
+		},
+		"transcript": {
+			"url": "https://goo.gl/swiAnf",
+			"title": "Download Transcript"
+		}
+	}
 }
 ```
 
@@ -147,27 +147,27 @@ Or it can be an array with multiple objects
 ```javascript
 {
 	"slides":[  
-      {  
-         "time":"00:00:00",
-         "img":"https://dummyimage.com/600x400/000/fff&text=1",
-      },
-      {  
-         "time":"00:00:02",
-         "title": "Ultricies nec, pellentesque eu",
-         "img":"https://dummyimage.com/600x400/000/fff&text=2"
-      },
-      {  
-         "time":"00:00:05",
-         "title": "Augue velit cursus nunc",
-         "img":"https://dummyimage.com/600x400/000/fff&text=3"
-      },
-      {  
-         "time":"00:00:08",
-         "title": "Donec quam felis,",
-         "img":"https://dummyimage.com/600x400/000/fff&text=4",
-         "alt": "Donec quam felis"
-      }
-    ]
+		{  
+		 "time":"00:00:00",
+		 "img":"https://dummyimage.com/600x400/000/fff&text=1",
+		},
+		{  
+		 "time":"00:00:02",
+		 "title": "Ultricies nec, pellentesque eu",
+		 "img":"https://dummyimage.com/600x400/000/fff&text=2"
+		},
+		{  
+		 "time":"00:00:05",
+		 "title": "Augue velit cursus nunc",
+		 "img":"https://dummyimage.com/600x400/000/fff&text=3"
+		},
+		{  
+		 "time":"00:00:08",
+		 "title": "Donec quam felis,",
+		 "img":"https://dummyimage.com/600x400/000/fff&text=4",
+		 "alt": "Donec quam felis"
+		}
+	]
 }
 ```
 
