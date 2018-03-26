@@ -402,21 +402,26 @@
         }
 
         function _initYoutubePlayer(){
-
             var $video = $chameleon.find('.chameleon-youtube-video');
             var o = $this.chameleonContext.youtubeSetup;
-
-            //FIXME: YT is not a constructor
-            $this.ytPlayer = new YT.Player('chameleon-youtube-video', {
-              height: '100%',
-              width: '100%',
-              videoId: o.videoId,
-              events: {
-                'onReady': function(){
-                    _bindYTonTimeChange();
+            
+            $.getScript('//www.youtube.com/iframe_api').fail(function( jqxhr, settings, exception ) {
+                console.log(exception);
+            })
+            .done(function () {
+                window.onYouTubeIframeAPIReady = function () {
+                   $this.ytPlayer = new YT.Player('chameleon-youtube-video', {
+                      height: '100%',
+                      width: '100%',
+                      videoId: o.videoId,
+                      events: {
+                        'onReady': function(){
+                            _bindYTonTimeChange();
+                        }
+                      }
+                  });
                 }
-              }
-          });
+            });
         }
 
         function _bindYTonTimeChange(){
