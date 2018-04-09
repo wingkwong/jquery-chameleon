@@ -1,8 +1,20 @@
-# jQuery-chameleon
+# jquery-chameleon
 
 Synchronizing slide images with videos 
 
-![](https://i.imgur.com/5RYpiH5.png)
+[![NPM version](https://img.shields.io/npm/v/jquery-chameleon.svg)](https://www.npmjs.com/package/jquery-chameleon) [![License](https://img.shields.io/npm/l/jquery-chameleon.svg)](https://github.com/wingkwong/jquery-chameleon/blob/master/LICENSE) [![Total NPM Download](https://img.shields.io/npm/dt/jquery-chameleon.svg)](https://www.npmjs.com/package/jquery-chameleon)
+
+### Features
+* **Video Synchronization with slide images:** 
+	Synchronzing the video and slide images based on the preset rules. 
+* **Markers:** 
+	Showing the highlighted slide, i.e. the one you are currently viewing. Navigated to a specific moment with a simple click.
+* **Responsive:** 
+	Rendering in a responsive way or not is your choice.
+* **Multiple Video Player Support:** 
+	Currently supported video players are HTML5 player (by default), YT Player and JWPlayer 7.
+* **Download Panel:** 
+	Allowing users to download video, slides and transcript.
 
 ### Installing
 
