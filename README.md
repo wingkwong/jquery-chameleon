@@ -1,6 +1,7 @@
 # jquery-chameleon
 
 Synchronizing slide images with videos 
+
 [![NPM version](https://img.shields.io/npm/v/jquery-chameleon.svg)](https://www.npmjs.com/package/jquery-chameleon) [![License](https://img.shields.io/npm/l/jquery-chameleon.svg)](https://github.com/wingkwong/jquery-chameleon/blob/master/LICENSE) [![Total NPM Download](https://img.shields.io/npm/dt/jquery-chameleon.svg)](https://www.npmjs.com/package/jquery-chameleon)
 
 ### Features
