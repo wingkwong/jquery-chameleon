@@ -4,6 +4,8 @@ Synchronizing slide images with videos
 
 [![NPM version](https://img.shields.io/npm/v/jquery-chameleon.svg)](https://www.npmjs.com/package/jquery-chameleon) [![License](https://img.shields.io/npm/l/jquery-chameleon.svg)](https://github.com/wingkwong/jquery-chameleon/blob/master/LICENSE) [![Total NPM Download](https://img.shields.io/npm/dt/jquery-chameleon.svg)](https://www.npmjs.com/package/jquery-chameleon)
 
+![screenshot](https://i.imgur.com/5RYpiH5.png)
+
 ### Features
 * **Video Synchronization with slide images:** 
 	Synchronzing the video and slide images based on the preset rules. 
