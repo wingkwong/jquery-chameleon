@@ -3,6 +3,7 @@
 Synchronizing slide images with videos 
 
 [![NPM version](https://img.shields.io/npm/v/jquery-chameleon.svg)](https://www.npmjs.com/package/jquery-chameleon) [![License](https://img.shields.io/npm/l/jquery-chameleon.svg)](https://github.com/wingkwong/jquery-chameleon/blob/master/LICENSE) [![Total NPM Download](https://img.shields.io/npm/dt/jquery-chameleon.svg)](https://www.npmjs.com/package/jquery-chameleon)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwingkwong%2Fjquery-chameleon.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwingkwong%2Fjquery-chameleon?ref=badge_shield)
 
 ![screenshot](https://i.imgur.com/5RYpiH5.png)
 
@@ -58,3 +59,6 @@ The documentation is available at [https://wingkwong.gitbooks.io/jquery-chameleo
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/wingkwong/jquery-chameleon/blob/master/LICENSE) file for details
 
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwingkwong%2Fjquery-chameleon.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwingkwong%2Fjquery-chameleon?ref=badge_large)
