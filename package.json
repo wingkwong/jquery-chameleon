@@ -1,6 +1,6 @@
 {
   "name": "jquery-chameleon",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "jQuery plugin for synchronizing slides with videos - https://github.com/wingkwong/jquery-chameleon",
   "main": "chameleon.min",
   "scripts": {
@@ -23,7 +23,7 @@
     "sync",
     "slides"
   ],
-  "author": "wingkwong.code@gmail.com",
+  "author": "WONG, Wing Kam <wingkwong.code@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/wingkwong/jquery-chameleon/issues"
