@@ -19,4 +19,4 @@
 - Download Panel
 - Documentation
 
-[Unreleased]: https://github.com/wingkwong/jquery-chameleon/compare/v1.1...v1.2
+[Unreleased]: https://github.com/wingkwong/jquery-chameleon/compare/1.1.0...1.2.0
