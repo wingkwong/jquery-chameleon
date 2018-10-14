@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.2.0 - Unreleased]
+## 1.2.0 - 2018-10-24
 ### Added
 - Demo pages
 - Setup object validations for each players
