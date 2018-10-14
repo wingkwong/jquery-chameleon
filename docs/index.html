@@ -1,0 +1,127 @@
+<html>
+	<body>
+		<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+		<script type="text/javascript" src="chameleon.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link href="chameleon.min.css" rel="stylesheet" />
+		<div class="chameleon"></div>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('.chameleon').chameleon({
+					responsive: true,
+					chameleonContext: {
+					  "html5Setup" :{
+					      "sources": [
+					         {
+					            "file": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+					            "type": "video/mp4"
+					         }
+					      ]
+					   },
+					   "download": {
+					   		"slides": {
+					   			"url": "https://github.com/wingkwong/jquery-chameleon/archive/1.1.zip",
+					   			"title": "Download Slides"
+					   		},
+					   		"video": {
+					   			"url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+					   			"title": "Download Video"
+					   		},
+					   		"transcript": {
+					   			"url": "https://raw.githubusercontent.com/wingkwong/jquery-chameleon/1.1/README.md",
+					   			"title": "Download Transcript"
+					   		}
+					   },
+					   "slides":[
+					      {
+					         "time":"00:00:00",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=1",
+					         "title": "Lorem ipsum dolor sit amet",
+					         "alt": "Dummy alt text"
+					      },
+					      {
+					         "time":"00:00:02",
+									 "title": "consectetur adipiscing elit",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=2"
+					      },
+					      {
+					         "time":"00:00:05",
+									 "title": "ed do eiusmod tempor incididunt ",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=3"
+					      },
+					      {
+					         "time":"00:00:08",
+									 "title": "abore et dolore magna aliqua",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=4"
+					      },
+					      {
+					         "time":"00:00:09",
+									 "title": "Quis autem vel eum iure reprehenderit",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=5"
+					      },
+					      {
+					         "time":"00:00:12",
+									 "title": "qui dolorem ipsum quia dolo",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=6"
+					      },
+					      {
+					         "time":"00:00:15",
+									 "title": "quasi architecto",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=7"
+					      },
+					      {
+					         "time":"00:00:18",
+									 "title": "Sed ut perspiciatis unde",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=8"
+					      },
+					      {
+					         "time":"00:00:20",
+									 "title": "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. ",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=9"
+					      },
+					      {
+					         "time":"00:00:21",
+									 "title": "Lorem ipsum dolor sit amet",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=10"
+					      },
+					      {
+					         "time":"00:00:23",
+									 "title": "Ut enim ad minima veniam",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=11"
+					      },
+					      {
+					         "time":"00:00:24",
+									 "title": "oluptate velit esse qu",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=12"
+					      },
+					      {
+					         "time":"00:00:25",
+									 "title": "esse cillum dolore eu",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=13"
+					      },
+					      {
+					         "time":"00:00:26",
+									 "title": "sunt in culpa qui o",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=14"
+					      },
+					      {
+					         "time":"00:00:28",
+									 "title": "tempor incididunt ut",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=15"
+					      },
+					      {
+					         "time":"00:00:29",
+									 "title": "Lorem ipsum dolor sit amet",
+					         "img":"https://dummyimage.com/600x400/000/fff&text=16"
+					      }
+					   ]
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
