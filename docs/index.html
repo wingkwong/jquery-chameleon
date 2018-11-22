@@ -8,9 +8,14 @@
          src="https://code.jquery.com/jquery-3.3.1.min.js"
          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
          crossorigin="anonymous"></script>
-      <script type="text/javascript" src="chameleon.min.js"></script>
+      <script type="text/javascript" src="chameleon.js"></script>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-      <link href="chameleon.min.css" rel="stylesheet" />
+	  <link href="chameleon.css" rel="stylesheet" />
+	  <style>
+		  body {
+			  background: #000;
+		  }
+	  </style>
    </head>
    <body>
       <div class="chameleon"></div>
@@ -19,6 +24,7 @@
          	$('.chameleon').chameleon({
          		responsive: true,
          		chameleonContext: {
+				  "title": "Lorem ipsum dolor sit amet",
          		  "html5Setup" :{
          		      "sources": [
          		         {

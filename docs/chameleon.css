@@ -10,7 +10,7 @@
  *
  * chameleon.css
  * @author Wing Kam Wong - wingkwong.code@gmail.com
- * @version - 1.2.0
+ * @version - 1.3.0
  */
 
 
@@ -21,6 +21,12 @@
 
 .chameleon a{
 	color: #ffffff;
+}
+
+.header-container .video-title{
+	color: #ffffff;
+	font-size: 16px;
+	padding: 10px 20px;
 }
 
 .video-container{
@@ -47,7 +53,8 @@
 }
 
 .download-container{
-    background-color: black;
+	background-color: black;
+	text-align: right;
 }
 
 .download-icon{
