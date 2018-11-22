@@ -64,12 +64,13 @@
         var infoPanel = {
             'base': '<div class="dropdown-box"></div>',
             'header': '<div class="dropdown-header"></div>',
-            'button': '<div class="dropdown-btn-wrapper">Markers <span class="dropdown-btn down"></span></div>',
+            'button': '<div class="dropdown-btn-wrapper">Markers <span class="dropdown-btn up"></span></div>',
             'content': '<div class="dropdown-content"></div>'
         };
 
         var infoPanelSlide = {
             'base': '<a href="javascript:;" class="info-panel-slide"></a>',
+            'slideThumbnail': '<div class="slide-thumbnail"><img/></div>',
             'slideNumber': '<div class="slide-number"></div>',
             'slideTitle': '<div class="slide-title-wrapper"><div class="slide-title"></div></div>',
             'slideTime': '<div class="slide-time"></div>',
@@ -163,15 +164,6 @@
             */
             $chameleon.append($slideContainer);
 
-            /*
-                Info Panel Container
-            */
-            $chameleon.append($infoPanelContainer);
-
-            /*
-                Carousel Container
-            */
-            $chameleon.append($carouselContainer);
 
             /*
                 Download Container
@@ -228,89 +220,104 @@
             // Set the first slide as a cover
             _setSlide(0);
 
-            // Building Slides Carousel
-            $chameleon.find('.carousel-container').append($previewSlideContainer).append($carouselControl);
+            /*
+                Building Carousel Container
+            */
+            if(o.showCarousel) {
+                $chameleon.append($carouselContainer);
+                            // Building Slides Carousel
+                $chameleon.find('.carousel-container').append($previewSlideContainer).append($carouselControl);
 
-            for (var i = 1; i <= $this.chameleonContext.slides.length; i++) {
-                var $cItem = $($carouselItem).append($previewImage);
-                $cItem.find('.slide-image').attr('data-index', i);
-                $cItem.find('.slide-image img').attr('src', $this.chameleonContext.slides[i - 1].img);
-                $cItem.find('.slide-image img').attr('title', $this.chameleonContext.slides[i - 1].title);
-                $cItem.find('.slide-image img').attr('alt', $this.chameleonContext.slides[i - 1].alt);
-                $cItem.find('.slide-number').html((i) + '/' + $this.chameleonContext.slides.length);
-                $chameleon.find('.preview-slide-container').append($cItem);
-            }
+                for (var i = 1; i <= $this.chameleonContext.slides.length; i++) {
+                    var $cItem = $($carouselItem).append($previewImage);
+                    $cItem.find('.slide-image').attr('data-index', i);
+                    $cItem.find('.slide-image img').attr('src', $this.chameleonContext.slides[i - 1].img);
+                    $cItem.find('.slide-image img').attr('title', $this.chameleonContext.slides[i - 1].title);
+                    $cItem.find('.slide-image img').attr('alt', $this.chameleonContext.slides[i - 1].alt);
+                    $cItem.find('.slide-number').html((i) + '/' + $this.chameleonContext.slides.length);
+                    $chameleon.find('.preview-slide-container').append($cItem);
+                }
 
-            $chameleon.find('.carousel-item:first').addClass("active");
+                $chameleon.find('.carousel-item:first').addClass("active");
 
-            // Building multiple sets of carousel items
+                // Building multiple sets of carousel items
 
-            if ($this.chameleonContext.slides.length > o.numOfCarouselSlide) {
-                $chameleon.find('.carousel-item').each(function () {
-                    var itemToClone = $(this);
-                    for (var i = 1; i < o.numOfCarouselSlide; i++) {
-                        itemToClone = itemToClone.next();
-                        if (!itemToClone.length) {
-                            itemToClone = $(this).siblings(':first');
+                if ($this.chameleonContext.slides.length > o.numOfCarouselSlide) {
+                    $chameleon.find('.carousel-item').each(function () {
+                        var itemToClone = $(this);
+                        for (var i = 1; i < o.numOfCarouselSlide; i++) {
+                            itemToClone = itemToClone.next();
+                            if (!itemToClone.length) {
+                                itemToClone = $(this).siblings(':first');
+                            }
+                            itemToClone.children(':first-child').clone()
+                                .addClass("js-chameleon-" + (i))
+                                .appendTo($(this));
                         }
-                        itemToClone.children(':first-child').clone()
-                            .addClass("js-chameleon-" + (i))
-                            .appendTo($(this));
-                    }
-                });
+                    });
 
-                var carouselInnerWidth = $chameleon.find('.carousel-item.active').width();
-                var imageWidth = $chameleon.find('.carousel-item.active .thumbnail-container:first').width();
-                $this.maxImgInARow = Math.floor(carouselInnerWidth / imageWidth);
+                    var carouselInnerWidth = $chameleon.find('.carousel-item.active').width();
+                    var imageWidth = $chameleon.find('.carousel-item.active .thumbnail-container:first').width();
+                    $this.maxImgInARow = Math.floor(carouselInnerWidth / imageWidth);
 
-                if ((o.numOfCarouselSlide > $this.maxImgInARow) && $this.maxImgInARow > 5) {
-                    $chameleon.find('.carousel-item .js-chameleon-3').addClass("current-slide");
-                } else {
-                    var total = $chameleon.find('.carousel-item.active .thumbnail-container').length;
-                    if (Math.floor(total / 2) >= 1) {
-                        var i = $chameleon.find('.carousel-item.active .thumbnail-container:nth-child( ' + Math.floor(total / 2) + ') .slide-image').attr("data-index");
-                        $chameleon.find('.carousel-item .js-chameleon-' + i + '').addClass("current-slide");
+                    if ((o.numOfCarouselSlide > $this.maxImgInARow) && $this.maxImgInARow > 5) {
+                        $chameleon.find('.carousel-item .js-chameleon-3').addClass("current-slide");
                     } else {
-                        $chameleon.find('.carousel-control').remove();
-                        $chameleon.find('.carousel-item .thumbnail-container').addClass("current-slide");
+                        var total = $chameleon.find('.carousel-item.active .thumbnail-container').length;
+                        if (Math.floor(total / 2) >= 1) {
+                            var i = $chameleon.find('.carousel-item.active .thumbnail-container:nth-child( ' + Math.floor(total / 2) + ') .slide-image').attr("data-index");
+                            $chameleon.find('.carousel-item .js-chameleon-' + i + '').addClass("current-slide");
+                        } else {
+                            $chameleon.find('.carousel-control').remove();
+                            $chameleon.find('.carousel-item .thumbnail-container').addClass("current-slide");
+                        }
                     }
-                }
 
-                $chameleon.find('.current-slide img').css("width", "120px");
+                    $chameleon.find('.current-slide img').css("width", "120px");
 
-                _updateSlideCarouel(0);
+                    _updateSlideCarouel(0);
 
-            } else {
-                $chameleon.find('.carousel-control').remove();
-                $chameleon.find('.carousel-item').addClass("active");
-            }
-            
-            // Building Info Panel
-            $infoPanelContainer = $chameleon.find('.info-panel');
-            $infoPanel = $(infoPanel.base);
-            $header = $(infoPanel.header).append(infoPanel.button);
-            $content = $(infoPanel.content);
-            $ip = $infoPanel.append($header).append($content);
-            $infoPanelContainer.append($ip);
-
-            // Building Info Panel - slide
-            for (var i = 0; i < $this.chameleonContext.slides.length; i++) {
-                $infoPanelSlide = $(infoPanelSlide.base)
-                    .append(infoPanelSlide.slideNumber)
-                    .append(infoPanelSlide.slideTime)
-                    .append(infoPanelSlide.slideTitle);
-                $infoPanelSlide.attr("data-index", i);
-                $infoPanelSlide.find('.slide-number').html("#" + (i + 1));
-                $infoPanelSlide.find('.slide-time').html($this.chameleonContext.slides[i].time);
-                if (typeof $this.chameleonContext.slides[i].title === "undefined" || $this.chameleonContext.slides[i].title == '') {
-                    $infoPanelSlide.find('.slide-title').html("-");
                 } else {
-                    $infoPanelSlide.find('.slide-title').html($this.chameleonContext.slides[i].title);
+                    $chameleon.find('.carousel-control').remove();
+                    $chameleon.find('.carousel-item').addClass("active");
                 }
-                $chameleon.find('.dropdown-content').append($infoPanelSlide);
+
             }
 
+            /*
+                Building Info Panel Container
+            */
+           if(o.showMarkers) {
+                $chameleon.append($infoPanelContainer);
+                
+                // Building Info Panel
+                $infoPanelContainer = $chameleon.find('.info-panel');
+                $infoPanel = $(infoPanel.base);
+                $header = $(infoPanel.header).append(infoPanel.button);
+                $content = $(infoPanel.content);
+                $ip = $infoPanel.append($header).append($content);
+                $infoPanelContainer.append($ip);
 
+                // Building Info Panel - slide
+                for (var i = 0; i < $this.chameleonContext.slides.length; i++) {
+                    $infoPanelSlide = $(infoPanelSlide.base)
+                        .append(infoPanelSlide.slideNumber)
+                        .append(infoPanelSlide.slideThumbnail)
+                        .append(infoPanelSlide.slideTime)
+                        .append(infoPanelSlide.slideTitle);
+                    $infoPanelSlide.attr("data-index", i);
+                    $infoPanelSlide.find('.slide-number').html("#" + (i + 1));
+                    $infoPanelSlide.find('.slide-thumbnail img').attr("src", $this.chameleonContext.slides[i].img);
+                    $infoPanelSlide.find('.slide-time').html($this.chameleonContext.slides[i].time);
+                    if (typeof $this.chameleonContext.slides[i].title === "undefined" || $this.chameleonContext.slides[i].title == '') {
+                        $infoPanelSlide.find('.slide-title').html("-");
+                    } else {
+                        $infoPanelSlide.find('.slide-title').html($this.chameleonContext.slides[i].title);
+                    }
+                    $chameleon.find('.dropdown-content').append($infoPanelSlide);
+                }
+
+           }
 
             // Register Click Events
             _registerClickEvents();
@@ -514,9 +521,11 @@
                     'margin': '10px 0px'
                 });
 
-                $chameleon.find('.info-panel-slide .slide-number').addClass("col-xs-12 col-sm-2");
-                $chameleon.find('.info-panel-slide .slide-time').addClass("col-xs-12 col-sm-2");
-                $chameleon.find('.info-panel-slide .slide-title-wrapper').addClass("col-xs-12 col-sm-8");
+                $chameleon.find('.info-panel-slide').addClass("col-xs-12 col-sm-6 col-md-4");
+                $chameleon.find('.info-panel-slide .slide-number').addClass("col-xs-12 col-sm-1");
+                $chameleon.find('.info-panel-slide .slide-thumbnail').addClass("col-xs-12 col-sm-6 col-md-4");
+                $chameleon.find('.info-panel-slide .slide-time').addClass("col-xs-12 col-md-2");
+                $chameleon.find('.info-panel-slide .slide-title-wrapper').addClass("col-xs-12 col-md-6");
 
 
             } else {
@@ -647,6 +656,8 @@
         chameleonContext: {}, // slides JSON file / object
         numOfCarouselSlide: 5, // number of slides showing in carousel
         responsive: false,
-        player: 'html5'
+        player: 'html5',
+        showMarkers: false,
+        showCarousel: false
     };
 }));
