@@ -5,8 +5,8 @@ A jQuery plugin to synchronize slide images with videos in JWPlayer 7, HTML5 or 
 [![NPM version](https://img.shields.io/npm/v/jquery-chameleon.svg)](https://www.npmjs.com/package/jquery-chameleon) [![License](https://img.shields.io/npm/l/jquery-chameleon.svg)](https://github.com/wingkwong/jquery-chameleon/blob/master/LICENSE) [![Total NPM Download](https://img.shields.io/npm/dt/jquery-chameleon.svg)](https://www.npmjs.com/package/jquery-chameleon)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwingkwong%2Fjquery-chameleon.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwingkwong%2Fjquery-chameleon?ref=badge_shield)
 
-![screenshot](https://wingkwong.gitbooks.io/jquery-chameleon/content/assets/cover-without-markers.png)
-![screenshot](https://wingkwong.gitbooks.io/jquery-chameleon/content/assets/cover-with-markers.png)
+![screenshot](https://wingkwong.gitbooks.io/jquery-chameleon/content/assets/cover-1-1.3.0.png)
+![screenshot](https://wingkwong.gitbooks.io/jquery-chameleon/content/assets/cover-2-1.3.0.png)
 
 ### Features
 * **Video Synchronization with slide images:**
