@@ -8,8 +8,8 @@
  *  \_____|_|  |_/_/    \_\_|  |_|______|______|______\____/|_| \_|
  *
  *
- * chameleon.js - synchronizing slides with videos
- * @author Wing Kam Wong - wingkwong.code@gmail.com
+ * chameleon.js - A jQuery plugin to synchronize slide images with videos in JWPlayer 7, HTML5 or YouTube Player
+ * @author WONG, Wing Kam - wingkwong.code@gmail.com
  * @version - 1.3.0
  */
 ;
@@ -98,7 +98,7 @@
                 /*
                   Download Buttons
                 */
-                if (!$.isEmptyObject(o.chameleonContext.download)) {
+                if (o.showDownloadPanel && !$.isEmptyObject(o.chameleonContext.download)) {
                     $chameleon.find('.header-container').append($downloadContainer);
 
                     if (typeof o.chameleonContext.download.slides != "undefined" &&
@@ -163,12 +163,6 @@
                 Slide Container
             */
             $chameleon.append($slideContainer);
-
-
-            /*
-                Download Container
-            */
-            $chameleon.append($downloadContainer);
 
             if (!o.responsive)
                 $chameleon.css("width", o.width).css("height", o.height);
@@ -287,7 +281,7 @@
             /*
                 Building Info Panel Container
             */
-           if(o.showMarkers) {
+           if(o.showMarkers && o.responsive) {
                 $chameleon.append($infoPanelContainer);
                 
                 // Building Info Panel
@@ -498,12 +492,13 @@
 
         function _responsify() {
             if (o.responsive) {
-                $chameleon.find('.video-container').addClass("col-md-6 col-xs-12");
+                $chameleon.addClass("chameleon-responsive");
+                $chameleon.find('.video-container').addClass("col-md-5 col-xs-12");
                 $chameleon.find('.video-container').css({
                     'padding': '0px',
-                    'height': '300px'
+                    'height': '400px'
                 });
-                $chameleon.find('.slide-container').addClass("col-md-6 col-xs-12");
+                $chameleon.find('.slide-container').addClass("col-md-7 col-xs-12");
 
                 $chameleon.find('.slide-container img').css({
                     'margin-left': 'auto',
@@ -521,11 +516,11 @@
                     'margin': '10px 0px'
                 });
 
-                $chameleon.find('.info-panel-slide').addClass("col-xs-12 col-sm-6 col-md-4");
-                $chameleon.find('.info-panel-slide .slide-number').addClass("col-xs-12 col-sm-1");
-                $chameleon.find('.info-panel-slide .slide-thumbnail').addClass("col-xs-12 col-sm-6 col-md-4");
-                $chameleon.find('.info-panel-slide .slide-time').addClass("col-xs-12 col-md-2");
-                $chameleon.find('.info-panel-slide .slide-title-wrapper').addClass("col-xs-12 col-md-6");
+                $chameleon.find('.info-panel-slide').addClass("col-xs-12 col-sm-6 col-lg-4");
+                $chameleon.find('.info-panel-slide .slide-number').addClass("col-xs-12 col-md-1");
+                $chameleon.find('.info-panel-slide .slide-thumbnail').addClass("col-xs-12 col-sm-6 col-lg-4");
+                $chameleon.find('.info-panel-slide .slide-time').addClass("col-xs-2");
+                $chameleon.find('.info-panel-slide .slide-title-wrapper').addClass("col-xs-12 col-lg-6");
 
 
             } else {
@@ -542,14 +537,15 @@
                 });
 
                 $chameleon.find('.download-container').css({
-                    'width': '100%',
+                    'width': '50%',
                     'height': '40px',
                     'float': 'left',
                     'line-height': '40px'
                 });
 
-                $chameleon.find('.download-btn').css({
-                    'width': '30%'
+                $chameleon.find('.video-title').css({
+                    'width': '50%',
+                    'float': 'left'
                 })
 
                 $chameleon.find('.info-panel .slide-number, .info-panel .slide-time').css({
@@ -658,6 +654,7 @@
         responsive: false,
         player: 'html5',
         showMarkers: false,
-        showCarousel: false
+        showCarousel: false,
+        showDownloadPanel: false,
     };
 }));

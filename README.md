@@ -1,6 +1,6 @@
 # jquery-chameleon
 
-Synchronizing slide images with videos
+A jQuery plugin to synchronize slide images with videos in JWPlayer 7, HTML5 or YouTube Player
 
 [![NPM version](https://img.shields.io/npm/v/jquery-chameleon.svg)](https://www.npmjs.com/package/jquery-chameleon) [![License](https://img.shields.io/npm/l/jquery-chameleon.svg)](https://github.com/wingkwong/jquery-chameleon/blob/master/LICENSE) [![Total NPM Download](https://img.shields.io/npm/dt/jquery-chameleon.svg)](https://www.npmjs.com/package/jquery-chameleon)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwingkwong%2Fjquery-chameleon.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwingkwong%2Fjquery-chameleon?ref=badge_shield)
@@ -13,6 +13,8 @@ Synchronizing slide images with videos
 	Synchronzing slide images with videos based on the preset rules.
 * **Markers:**
 	Showing the highlighted slide, i.e. the one you are currently viewing. Navigated to a specific moment with a simple click.
+* **Carousel Navigatior:**
+	Showing N slides in a carousel where N can be configured with the variable numOfCarouselSlide
 * **Responsive:**
 	Rendering in a responsive way or not is your choice.
 * **Multiple Video Player Support:**
@@ -54,7 +56,7 @@ The documentation is available at [https://wingkwong.gitbooks.io/jquery-chameleo
 
 ## Authors
 
-* **Wing Kam WONG** -  [@wingkwong](https://github.com/wingkwong)
+* **WONG, Wing Kam** -  [@wingkwong](https://github.com/wingkwong)
 
 ## License
 
