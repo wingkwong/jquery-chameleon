@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.3.0 - 2018-12-24
+### Added
+- Header Container 
+- Video Title
+
+### Changed
+- Moved Download Container to Header Container
+- Revised markers container structure to allow slide images in it
+- Revised theme color 
+- Revised the portion for video container and slide container from 6:6 to 5:7 in responsive design
+
+### Removed
+- Download button text
+
 ## 1.2.0 - 2018-10-24
 ### Added
 - Demo pages
